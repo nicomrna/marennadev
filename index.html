@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios de Creación de Tiendas Online | Marenna Dev</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+.contact-form .button-group {
+    display: flex; /* Flexbox para alinear botones */
+    justify-content: center; /* Centra los botones */
+    gap: 15px; /* Espacio entre botones */
+    margin-top: 20px; /* Espacio superior para separarlo del formulario */
+}
+
+.contact-form button,
+.contact-form .whatsapp-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex; /* Flexbox para centrar el contenido dentro del botón */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    height: 50px; /* Altura fija para los botones */
+    line-height: 1.5; /* Ajusta el texto dentro del botón */
+}
+
+.contact-form button {
+    background-color: #0050C3; /* Color del botón de enviar */
+    color: white;
+}
+
+.contact-form button:hover {
+    background-color: #003a91; /* Color de hover para el botón de enviar */
+}
+
+.contact-form .whatsapp-button {
+    background-color: #25D366; /* Color de WhatsApp */
+    color: white;
+    text-decoration: none;
+}
+
+.contact-form .whatsapp-button i {
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
+.contact-form .whatsapp-button:hover {
+    background-color: #1DA851; /* Color de hover para el botón de WhatsApp */
+}
+
+#backToTop {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100; /* Asegura que el botón esté por encima de otros elementos */
+    background-color: #0050C3;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#backToTop:hover {
+    background-color: #003a91;
+}
+
+
+/* Estilo del botón de WhatsApp en "Contacto" */
+.whatsapp-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #25D366; /* Color verde de WhatsApp */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.whatsapp-button:hover {
+  background-color: #1da653; /* Un verde más oscuro al hacer hover */
+}
+
+        nav ul li a:hover {
+  background-color: #0050C3; /* Color azul de fondo */
+  color: white; /* Cambia el color del texto a blanco */
+  transition: background-color 0.3s, color 0.3s; /* Transición suave para el color de fondo y del texto */
+}
+
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #171E43;
+            background-color: #F4F7F9;
+            line-height: 1.6;
+        }
+        header {
+    background-color: #DEEFFE;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.logo-img {
+    max-width: 160px; /* Ajusta según el tamaño del logo */
+    height: auto;
+}
+
+.logo-text {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #171E43;
+}
+
+        }
+        header img {
+            max-width: 150px;
+            height: auto;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            color: #171E43;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #0050C3;
+        }
+        .hero {
+            background-color: #DEEFFE;
+            padding: 80px 20px;
+            text-align: center;
+            color: #171E43;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 1.3em;
+            margin: 20px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .section h2 {
+            font-size: 2.4em;
+            color: #171E43;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section ul li {
+            background-color: #FFFFFF;
+            border: 1px solid #DEEFFE;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+        .section ul li:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .section p {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #0050C3;
+            color: #DEEFFE;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #003A8C;
+        }
+        footer {
+            background-color: #171E43;
+            color: #DEEFFE;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+        footer p {
+            margin: 0;
+        }
+        footer a {
+            color: #DEEFFE;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #0050C3;
+        }
+        footer i {
+            font-size: 1.5em;
+        }
+
+        /* Carrusel de Testimonios */
+        .testimonial {
+            background-color: #FFFFFF;
+            padding: 40px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+        }
+        .testimonial h2 {
+            font-size: 2.4em;
+            color: #171E43;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .testimonial-carousel {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        .testimonial-carousel .testimonial-item {
+            flex: 0 0 100%;
+            transition: transform 0.5s ease;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+        .testimonial-carousel .testimonial-item img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+        }
+        .testimonial-carousel .testimonial-item p {
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+        /* Estilo FAQ */
+        .faq {
+            background-color: #FFFFFF;
+            padding: 40px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: auto;
+        }
+        .faq h2 {
+            font-size: 2.4em;
+            color: #171E43;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .faq ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .faq ul li {
+            background-color: #FFFFFF;
+            border: 1px solid #DEEFFE;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+        .faq ul li:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .faq h3 {
+            font-size: 1.5em;
+            color: #0050C3;
+        }
+        .faq p {
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+        /* Formato de Contacto */
+        .contact-form {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .contact-form input, .contact-form textarea, .contact-form button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #DEEFFE;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .contact-form button {
+            background-color: #0050C3;
+            color: #DEEFFE;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .contact-form button:hover {
+            background-color: #003A8C;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+            .hero p {
+                font-size: 1.1em;
+            }
+            .section h2 {
+                font-size: 2em;
+            }
+            .testimonial-carousel .testimonial-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .testimonial-carousel .testimonial-item img {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 10px;
+            }
+            .faq ul li {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <img src="partner.png" alt="Logo Marenna Dev" class="logo-img">
+        <span class="logo-text"> + Marenna Dev</span>
+    </div>
+    <nav>
+        <a href="#hero">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#faq">FAQs</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+</header>
+
+
+<section id="hero" class="hero">
+    <h1>Creá tu tienda online y potenciá tu negocio</h1>
+    <p>Como partner oficial de Tienda Nube, te acompaño en cada paso para lanzar y hacer crecer tu tienda online. Diseño, integración y optimización, todo en un solo lugar, con asesoría ilimitada y personalizada.</p>
+    <a href="#contacto" class="cta-button">¡Comenzá tu prueba gratis!</a>
+</section>
+
+
+<section id="servicios" class="section">
+    <h2>¿Qué incluye tu tienda online?</h2>
+    <ul>
+        <li><strong>01. Certificado SSL y Seguridad</strong><br>Garantizá la seguridad de tu tienda y la información de tus clientes con un certificado SSL incluido.</li>
+        <li><strong>02. Pasarela de Pagos Integrada</strong><br>Facilitá a tus clientes opciones de pago seguras y convenientes con múltiples pasarelas de pago como Mercado Pago, débito, crédito y transferencia bancaria.</li>
+        <li><strong>03. Métodos de Envío Personalizables</strong><br>Configurá diversas opciones de envío para cubrir todo el país, con integración directa con las mejores empresas de logística.</li>
+        <li><strong>04. Diseño Responsivo y Personalizable</strong><br>+60 plantillas gratuitas y totalmente personalizables para que tu tienda se vea increíble en cualquier dispositivo.</li>
+    </ul>
+    <a href="#contacto" class="cta-button">Empezá hoy</a>
+</section>
+
+
+<section id="testimonios" class="testimonial">
+    <h2>Testimonios</h2>
+    <div class="testimonial-carousel">
+        <div class="testimonial-item">
+            <img src="testeo.png" alt="Perfil 1"> <!-- Reemplaza "perfil1.jpg" con la ruta de la imagen -->
+            <div align="center">
+                <p>"Excelente servicio. La tienda fue creada enseguida y en esa misma semana ya hice la primer venta!"</p>
+                <p><strong><center>Juan Pablo Mendez</center></strong></p>
+            </div>
+        </div>
+        <div class="testimonial-item">
+            <img src="testeo.png" alt="Perfil 2"> <!-- Reemplaza "perfil2.jpg" con la ruta de la imagen -->
+            <div>
+                <p>"Muy profesional y eficiente realmente. La tienda quedó joya y la asesoría fue espectacular. Crack Nico."</p>
+                <p><strong><center>María Urriega</center></strong></p>
+            </div>
+        </div>
+        <!-- Añadir más testimonios aquí -->
+    </div>
+</section>
+
+<section id="faq" class="faq">
+    <h2>Preguntas Frecuentes</h2>
+    <ul>
+        <li>
+            <h3>¿Cuánto tiempo lleva crear una tienda online?</h3>
+            <p>El tiempo de creación varía según la complejidad del proyecto, pero normalmente entre 2 y 4 días.</p>
+        </li>
+        <li>
+            <h3>¿Qué incluye la asesoría gratuita de por vida?</h3>
+            <p>Incluye soporte continuo para resolver problemas y consultas sobre la tienda, al igual que la configuración del dominio web.</p>
+        </li>
+        <li>
+            <h3>¿Puedo hacer cambios en la tienda una vez creada?</h3>
+            <p>Sí, podrás realizar cambios en tu tienda en cualquier momento. También ofrecemos soporte para modificaciones mayores.</p>
+        </li>
+    </ul>
+</section>
+
+<section id="contacto" class="section">
+    <h2>Contacto</h2>
+    <p>¿Listo para empezar? Contáctame hoy mismo para comenzar a construir tu tienda online.</p>
+    <div class="contact-form">
+        <form action="mailto:contacto@marennadev.com" method="post" enctype="text/plain">
+            <input type="text" name="name" placeholder="Tu nombre" required>
+            <input type="email" name="email" placeholder="Tu correo electrónico" required>
+            <textarea name="message" rows="5" placeholder="Tu mensaje" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+        <HR><div align="center">
+        <a href="https://wa.me/542317402288" class="whatsapp-button" target="_blank">Contactar a través de WhatsApp</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Marenna Dev. Todos los derechos reservados.</p>
+    <div>
+        <a href="https://instagram.com/marennadev"><i class="fab fa-instagram"></i></a>
+        <a href="https://linkedin.com/company/marennadev"><i class="fab fa-linkedin"></i></a>
+        <a href="https://wa.me/542317402288"><i class="fab fa-whatsapp"></i></a>
+    </div>
+</footer>
+
+<script>
+    // Carrusel de Testimonios
+    let currentIndex = 0;
+    const items = document.querySelectorAll('.testimonial-carousel .testimonial-item');
+    const totalItems = items.length;
+
+    function showItem(index) {
+        items.forEach((item, i) => {
+            item.style.transform = `translateX(${-index * 100}%)`;
+        });
+    }
+
+    function autoSlide() {
+        currentIndex = (currentIndex < totalItems - 1) ? currentIndex + 1 : 0;
+        showItem(currentIndex);
+    }
+
+    setInterval(autoSlide, 3000); // Cambia automáticamente cada 3 segundos
+    showItem(currentIndex);
+
+    // Espera a que el DOM esté completamente cargado
+document.addEventListener("DOMContentLoaded", function () {
+  // Selecciona todos los enlaces dentro del menú de navegación
+  const menuLinks = document.querySelectorAll("nav a");
+
+  // Itera sobre cada enlace
+  menuLinks.forEach(link => {
+    // Añade un evento de clic a cada enlace
+    link.addEventListener("click", function (e) {
+      // Previene el comportamiento predeterminado del clic
+      e.preventDefault();
+
+      // Obtén el destino al que se quiere desplazar
+      const targetId = this.getAttribute("href");
+      const targetSection = document.querySelector(targetId);
+
+      // Desplazamiento suave hacia la sección objetivo
+      targetSection.scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  });
+});
+
+</script>
+<button id="backToTop" title="Ir arriba"><i class="fas fa-arrow-up"></i></button>
+<script>
+    // Mostrar el botón cuando el usuario se desplaza hacia abajo 100px desde la parte superior del documento
+    window.onscroll = function() {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        const backToTopButton = document.getElementById("backToTop");
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            backToTopButton.style.display = "block";
+        } else {
+            backToTopButton.style.display = "none";
+        }
+    }
+
+    // Cuando el usuario hace clic en el botón, vuelve a la parte superior del documento
+    document.getElementById("backToTop").addEventListener("click", function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
