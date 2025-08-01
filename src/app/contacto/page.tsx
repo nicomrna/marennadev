@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Bars3Icon, XMarkIcon, UserIcon, EnvelopeIcon, TagIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import { FaWhatsapp } from 'react-icons/fa';
 import Image from 'next/image';
+import React from 'react'; // Agregado para usar React.ChangeEvent
 
 export default function ContactoPage() {
   const [formData, setFormData] = useState({
@@ -19,12 +20,13 @@ export default function ContactoPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const handleChange = (e) => {
+  // FIX: Se agregó el tipo de evento 'e' para solucionar el error de TypeScript
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage('');
