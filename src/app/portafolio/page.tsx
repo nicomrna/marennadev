@@ -6,46 +6,55 @@ import { usePathname } from 'next/navigation';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 
-// Componente del Modal
-const DetallesModal = ({ proyecto, isOpen, onClose }) => {
-  if (!isOpen) return null;
+// 1. FIX: Se define un tipo para la estructura del objeto 'proyecto'
+type Proyecto = {
+    nombre: string;
+    descripcion: string;
+    imagen: string;
+    enlace: string;
+    detalles: string[];
+};
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center p-4 z-50">
-      <div className="bg-white p-8 rounded-xl shadow-2xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
-        <button 
-          onClick={onClose} 
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 text-2xl"
-        >
-          &times;
-        </button>
-        <h2 className="text-3xl font-bold mb-4">{proyecto.nombre}</h2>
-        <p className="text-gray-700 text-lg mb-6">{proyecto.descripcion}</p>
-        
-        <h3 className="text-2xl font-semibold mb-2">Características Principales</h3>
-        <ul className="list-disc list-inside space-y-2 text-gray-600">
-          {proyecto.detalles.map((detalle, index) => (
-            <li key={index}>{detalle}</li>
-          ))}
-        </ul>
+// 2. FIX: Se tipan los props del componente DetallesModal
+const DetallesModal = ({ proyecto, isOpen, onClose }: { proyecto: Proyecto, isOpen: boolean, onClose: () => void }) => {
+  if (!isOpen) return null;
 
-        <div className="mt-8 text-center">
-          <Link href={proyecto.enlace} className="inline-block bg-black text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-300">
-            Ver Proyecto
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center p-4 z-50">
+      <div className="bg-white p-8 rounded-xl shadow-2xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
+        <button 
+          onClick={onClose} 
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 text-2xl"
+        >
+          &times;
+        </button>
+        <h2 className="text-3xl font-bold mb-4">{proyecto.nombre}</h2>
+        <p className="text-gray-700 text-lg mb-6">{proyecto.descripcion}</p>
+        
+        <h3 className="text-2xl font-semibold mb-2">Características Principales</h3>
+        <ul className="list-disc list-inside space-y-2 text-gray-600">
+          {proyecto.detalles.map((detalle, index) => (
+            <li key={index}>{detalle}</li>
+          ))}
+        </ul>
+
+        <div className="mt-8 text-center">
+          <Link href={proyecto.enlace} className="inline-block bg-black text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-300">
+            Ver Proyecto
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default function PortafolioPage() {
     const [modalOpen, setModalOpen] = useState(false);
-    const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+    const [proyectoSeleccionado, setProyectoSeleccionado] = useState<Proyecto | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathname = usePathname();
 
-    const abrirModal = (proyecto) => {
+    const abrirModal = (proyecto: Proyecto) => {
         setProyectoSeleccionado(proyecto);
         setModalOpen(true);
     };
@@ -65,7 +74,7 @@ export default function PortafolioPage() {
     ];
 
     // Array de proyectos, ahora con una propiedad 'detalles'
-    const proyectos = [
+    const proyectos: Proyecto[] = [
         {
             nombre: 'Bonipuntos',
             descripcion: 'Plataforma completa de fidelización de clientes para PyMes. Desarrollado con una interfaz de usuario (front-end) para la gestión de puntos y un robusto panel de administración (back-end) para el control de clientes, premios, cupones y la revisión de reseñas.',
