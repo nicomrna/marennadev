@@ -2,11 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "/*.php",
-      "use": "@awam/vercel-php"
+      "src": "*.php",
+      "use": "vercel-php"
     }
   ],
   "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "/$1.php"

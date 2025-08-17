@@ -1,0 +1,558 @@
+/* --- ESTILOS PARA EL POPUP DE BONIPUNTOS --- */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.popup-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    position: relative;
+    background-color: #1a1a1a;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 400px;
+}
+
+.popup-overlay.visible .popup-content {
+    transform: scale(1);
+}
+
+.popup-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.popup-close-btn:hover {
+    color: #bbb;
+}
+
+.popup-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.popup-text h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.popup-text p {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 1.5rem;
+}
+
+.popup-cta-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.popup-cta-btn:hover {
+    background-color: #fff;
+    color: #111;
+}
+
+/* --- VARIABLES --- */
+:root {
+    --primary-color: #111;
+    --secondary-color: #f0f0f0;
+    --accent-color: #4CAF50; /* Verde sutil para un toque de color */
+    --light-bg: #222;
+    --dark-bg: #111;
+    --border-color: #444;
+}
+
+/* --- ESTILOS GENERALES --- */
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--secondary-color);
+    background-color: var(--dark-bg);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease;
+}
+
+h1, h2, h3 {
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+section {
+    padding: 6rem 5%;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* --- EFECTO DE ANIMACIÓN EN SCROLL --- */
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- HEADER --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    background-color: var(--dark-bg);
+    z-index: 1000;
+}
+
+.logo img {
+    height: 30px;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list li {
+    margin-left: 2.5rem;
+}
+
+/* Efecto de hover en los enlaces del header */
+.nav-list a {
+    position: relative;
+    padding: 5px;
+}
+
+.nav-list a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-list a:hover::after {
+    width: 100%;
+}
+
+/* --- SECCIÓN HERO --- */
+.hero {
+    text-align: center;
+    padding: 8rem 5%;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    margin-bottom: 1.5rem;
+}
+
+.hero p {
+    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    color: #aaa;
+}
+
+/* Botón con efecto de brillo */
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-color);
+    transition: transform 0.3s ease-in-out;
+    z-index: -1;
+}
+
+.cta-button:hover::before {
+    transform: translateX(100%);
+}
+
+.cta-button:hover {
+    color: var(--dark-bg);
+}
+
+/* --- SECCIÓN SERVICIOS --- */
+.services {
+    background-color: var(--light-bg);
+}
+
+.services h2, .portfolio h2, .about h2, .testimonials h2, .contact-cta h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    margin-bottom: 3.5rem;
+    color: #eee;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Tarjeta de servicio con sombra e ícono en color */
+.service-card {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background-color: #333;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #333;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-color);
+}
+
+.service-card h3 {
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.service-card p {
+    color: #aaa;
+}
+
+/* --- SECCIÓN PORTAFOLIO --- */
+.portfolio {
+    background-color: var(--dark-bg);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+/* Tarjeta de proyecto con efecto al pasar el cursor */
+.project-card {
+    display: block;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.project-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    filter: grayscale(80%);
+    transition: filter 0.3s ease;
+}
+
+.project-card:hover .project-image {
+    filter: grayscale(0%);
+}
+
+.project-info {
+    padding: 1.5rem;
+}
+
+.project-title {
+    font-size: 1.3rem;
+    margin: 0 0 0.7rem;
+    color: #fff;
+}
+
+.project-description {
+    font-size: 1rem;
+    color: #aaa;
+    margin: 0;
+}
+
+/* --- SECCIÓN TESTIMONIOS --- */
+.testimonials {
+    background-color: var(--light-bg);
+}
+
+.testimonial-card {
+    max-width: 700px;
+    margin: 0 auto;
+    font-style: italic;
+    color: #aaa;
+    padding: 2rem;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.client-name {
+    margin-top: 1.5rem;
+    font-style: normal;
+    font-weight: bold;
+    color: #eee;
+    display: block;
+}
+
+/* --- SECCIÓN ACERCA DE MÍ --- */
+.about {
+    text-align: center;
+    background-color: var(--dark-bg);
+}
+
+.about h2 {
+    color: #eee;
+}
+
+.about p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    color: #aaa;
+}
+
+/* --- SECCIÓN CONTACTO CTA --- */
+.contact-cta {
+    text-align: center;
+    background-color: var(--light-bg);
+}
+
+.contact-cta h2 {
+    color: #eee;
+    font-size: clamp(2.2rem, 5.5vw, 3.5rem);
+}
+
+.contact-cta p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: #aaa;
+}
+
+/* --- FOOTER --- */
+.footer {
+    text-align: center;
+    padding: 2rem 5%;
+    border-top: 1px solid var(--border-color);
+    color: #aaa;
+    font-size: 0.9rem;
+    background-color: var(--dark-bg);
+}
+
+/* --- FUENTES DE GOOGLE --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap');
+/* --- ESTILOS PARA PÁGINAS DE PROYECTOS --- */
+.project-main {
+    padding-top: 2rem;
+}
+
+.project-header {
+    text-align: center;
+    padding: 2rem 5%;
+}
+
+.project-header h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 0.5rem;
+}
+
+.project-header p {
+    font-size: 1.2rem;
+    color: #aaa;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.project-media {
+    padding: 0 5%;
+    text-align: center;
+}
+
+.main-image {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.project-details {
+    padding: 4rem 5%;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.details-info h3 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.details-info p {
+    color: #bbb;
+}
+
+.details-sidebar {
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.sidebar-item {
+    margin-bottom: 2rem;
+}
+
+.sidebar-item h4 {
+    font-size: 1.2rem;
+    color: #eee;
+    margin: 0 0 0.5rem;
+}
+
+.sidebar-item p {
+    color: #aaa;
+}
+
+.sidebar-item a {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.project-gallery {
+    padding: 0 5% 4rem;
+    text-align: center;
+}
+
+.project-gallery h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.gallery-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.project-navigation {
+    text-align: center;
+    padding: 4rem 5%;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.project-navigation a {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border: 1px solid var(--border-color);
+    color: var(--secondary-color);
+    transition: all 0.3s ease;
+}
+
+.project-navigation a:hover {
+    background-color: var(--secondary-color);
+    color: var(--dark-bg);
+}
+
+/* Responsivo para la página de proyecto */
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
