@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marenna Dev - Valen Taffa Store</title>
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Marenna Dev" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Marenna Dev Logo">
+        </a>
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#portafolio">Proyectos</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="project-main">
+        <section class="project-header">
+            <h1>Valen: Indumentaria & Arte</h1>
+            <p>Una tienda online que combina moda y expresión artística en un solo espacio.</p>
+        </section>
+
+        <section class="project-media">
+            <img src="valen-prev.png" alt="Vista previa tienda Valen" class="main-image">
+        </section>
+
+        <section class="project-details">
+            <div class="details-grid">
+                <div class="details-info">
+                    <h3>Resumen</h3>
+                    <p>Este proyecto consistió en el diseño y puesta en marcha de una tienda online en <strong>Tienda Nube</strong> para un emprendimiento que fusiona indumentaria con piezas de arte. La idea era crear un espacio digital donde se pudiera transmitir la identidad de la marca: cercana, creativa y con personalidad.</p>
+                    
+                    <h3>El Desafío</h3>
+                    <p>El cliente necesitaba una plataforma que no solo permitiera vender ropa y accesorios, sino que también transmitiera el valor artístico detrás de cada producto. El reto era unificar dos mundos —moda y arte— en una experiencia de compra simple, intuitiva y visualmente atractiva.</p>
+                    
+                    <h3>Mi Solución</h3>
+                    <p>Elegimos <strong>Tienda Nube</strong> como base por su facilidad de gestión y escalabilidad para el comercio. Personalicé la plantilla para reflejar la estética minimalista de la marca, implementé secciones claras para separar <em>Indumentaria</em> y <em>Arte</em>, y optimicé la experiencia móvil (mobile-first). Además, configuré integraciones con medios de pago locales, opciones de envío y conexión directa a redes sociales para potenciar la visibilidad.</p>
+                    
+                    <h3>Resultados</h3>
+                    <p>La tienda online permitió al cliente profesionalizar su marca y vender más allá de su círculo cercano. En el primer mes de funcionamiento logró concretar ventas en distintas provincias del país. La plataforma facilitó la gestión de stock, mejoró la presentación de los productos y ofreció a los clientes una experiencia de compra clara y confiable.</p>
+                </div>
+                
+                <div class="details-sidebar">
+                    <div class="sidebar-item">
+                        <h4>Servicios</h4>
+                        <p>Diseño y personalización de tienda online, Configuración de catálogo, Integración de medios de pago y envíos, Optimización UX/UI, Asesoría en ecommerce.</p>
+                    </div>
+                    <div class="sidebar-item">
+                        <h4>Tecnologías</h4>
+                        <p>Tienda Nube, HTML, CSS, personalización de plantillas, integraciones con pasarelas de pago y logística.</p>
+                    </div>
+                    <div class="sidebar-item">
+                        <h4>Enlace</h4>
+                        <a href="https://valentaffa.store/" target="_blank">Visitar Tienda en Vivo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-navigation">
+            <a href="bonipuntos.html" class="prev-project">← Proyecto Anterior</a>
+            <a href="vtk.html" class="next-project">Siguiente Proyecto →</a>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Marenna Dev. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+
+<script>
+    /*
+        UNIFICACIÓN DE SCRIPTS
+        ========================================================
+        1. Animación al hacer scroll (para las secciones)
+        2. Scroll suave para los enlaces del header y el botón CTA
+        3. Popup promocional
+    */
+
+    // ----- SCRIPT 1: ANIMACIÓN AL HACER SCROLL -----
+    const sections = document.querySelectorAll('section');
+
+    const observerOptions = {
+        root: null,
+        threshold: 0.2,
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        section.classList.add('hidden');
+        observer.observe(section);
+    });
+
+    // ----- SCRIPT 2: SCROLL SUAVE -----
+    // Seleccionar todos los enlaces de la navegación y el botón de acción
+    const smoothScrollLinks = document.querySelectorAll('.nav-list a[href^="#"], .cta-button[href^="#"]');
+
+    smoothScrollLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    // ----- SCRIPT 3: POPUP PROMOCIONAL -----
+    const popupOverlay = document.getElementById('bonipuntos-popup');
+    const closeBtn = document.querySelector('.popup-close-btn');
+
+    // Función para abrir el popup
+    function openPopup() {
+        popupOverlay.classList.add('visible');
+    }
+
+    // Función para cerrar el popup
+    function closePopup() {
+        popupOverlay.classList.remove('visible');
+    }
+
+    // Abrir el popup automáticamente después de 3 segundos de carga de la página
+    setTimeout(openPopup, 3000);
+
+    // Cerrar el popup con el botón
+    closeBtn.addEventListener('click', closePopup);
+
+    // Cerrar el popup al hacer clic fuera del contenido
+    popupOverlay.addEventListener('click', (e) => {
+        if (e.target === popupOverlay) {
+            closePopup();
+        }
+    });
+</script>
+</html>

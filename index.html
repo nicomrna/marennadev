@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marenna Dev - Desarrollador Web</title>
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Marenna Dev" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Marenna Dev Logo">
+        </a>
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#portafolio">Proyectos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <section id="inicio" class="hero">
+            <h1>Hago páginas web como si fueran cuentos.</h1>
+            <p>No me interesa que tu web “se vea profesional”. Me interesa que, cuando alguien entre, sienta que lo están invitando a tu casa y no a un banco. Que se quede, que lea, que entienda quién sos. Después, claro, también que funcione rápido y no explote.</p>
+            <a href="#portafolio" class="cta-button">Mirá lo que ya hice</a>
+        </section>
+
+        <section id="servicios" class="services">
+            <h2>Lo que hago (y lo que no).</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="icon-code"></i>
+                    <h3>Front-end sin disfraces</h3>
+                    <p>La parte que se ve. No pongo fuegos artificiales innecesarios: tipografías limpias, botones que parecen botones y textos que cuentan cosas. Internet no necesita más humo.</p>
+                </div>
+                <div class="service-card">
+                    <i class="icon-server"></i>
+                    <h3>Back-end que no se rompe</h3>
+                    <p>Lo que no se ve, pero sostiene todo. Bases de datos que no lloran, paneles que cualquiera puede usar sin tutoriales eternos, y sistemas que no te dan dolores de cabeza un domingo.</p>
+                </div>
+                <div class="service-card">
+                    <i class="icon-design"></i>
+                    <h3>Diseño con sentido</h3>
+                    <p>No hago dibujitos lindos. Pienso con vos qué querés transmitir, y lo convierto en un sitio que diga algo. Que tenga voz. Que sea tuyo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portafolio" class="portfolio">
+            <h2>Algunas historias que ya programé</h2>
+            <div class="portfolio-grid">
+                <a href="bonipuntos.html" class="project-card">
+                    <img src="bonipuntos-min.png" alt="Bonipuntos" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Sistema de fielización de clientes</h3>
+                        <p class="project-description">Una web que empezó siendo un “quiero algo simple” y terminó siendo un espacio donde la gente se queda a charlar.</p>
+                    </div>
+                </a>
+                <a href="valentaffa.html" class="project-card">
+                    <img src="valen-min.png" alt="Valen Taffa Store" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Tienda online</h3>
+                        <p class="project-description">Una tienda online que no parece un supermercado chino de internet. Cada producto tiene historia, y se nota.</p>
+                    </div>
+                </a>
+                <a href="vtk.html" class="project-card">
+                    <img src="vtk-prev.png" alt="VTK" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Tienda Online</h3>
+                        <p class="project-description">Un sitio donde la estética no le gana al contenido, pero tampoco se queda atrás. Equilibrio, como en la vida.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="testimonios" class="testimonials">
+            <h2>Lo que dicen los que confiaron</h2>
+            <div class="testimonial-card">
+                <p>
+                    “Yo quería una web normalita, de esas que tienen un par de fotos y un botón de WhatsApp escondido abajo.  
+                    Pero terminé con algo raro: un lugar donde mis clientes me escriben como si ya me conocieran de toda la vida.  
+                    No sé qué pasó: si la magia está en el diseño, en los textos o en la cabeza de este tipo.  
+                    Lo único que sé es que ahora me saludan con confianza, como si la página hubiera armado una mesa de café en vez de un formulario de contacto.”
+                </p>
+                <p class="client-name">— Cliente que no esperaba tanto</p>
+            </div>
+        </section>
+
+
+        <section id="acerca-de" class="about">
+            <h2>Quién soy (y por qué hago esto)</h2>
+            <p>No soy una agencia, ni un equipo multidisciplinario, ni tengo un slide de misión y visión. Soy uno solo, con la manía de contar historias en formato digital. Me gustan los sitios honestos, con personalidad. Trabajo escuchando primero, programando después. Y nunca al revés.</p>
+        </section>
+
+        <section id="contacto" class="contact-cta">
+            <h2>Escribime, pero de verdad</h2>
+            <p>Si me mandás un mensaje, no te va a contestar un bot, ni una secretaria, ni un “estimado cliente”. Voy a ser yo, con mate en mano, charlando de tu proyecto.</p>
+            <a href="https://api.whatsapp.com/send/?phone=542317402288&text&type=phone_number&app_absent=0" class="cta-button">Quiero charlar con vos</a>
+        </section>
+
+        <div id="bonipuntos-popup" class="popup-overlay hidden">
+            <div class="popup-content">
+                <span class="popup-close-btn">&times;</span>
+                <img src="bonipuntos-min.png" alt="Bonipuntos promoción" class="popup-image">
+                <div class="popup-text">
+                    <h2>Bonipuntos, tu sistema de fidelización</h2>
+                    <p>Un proyecto hecho a medida para que premies a tus clientes y los hagas volver una y otra vez. Una web que no parece una web, sino un espacio para charlar.</p>
+                    <a href="bonipuntos.html" class="popup-cta-btn">Ver el proyecto</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Marenna Dev. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+
+<script>
+    /*
+        UNIFICACIÓN DE SCRIPTS
+        ========================================================
+        1. Animación al hacer scroll (para las secciones)
+        2. Scroll suave para los enlaces del header y el botón CTA
+        3. Popup promocional
+    */
+
+    // ----- SCRIPT 1: ANIMACIÓN AL HACER SCROLL -----
+    const sections = document.querySelectorAll('section');
+
+    const observerOptions = {
+        root: null,
+        threshold: 0.2,
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        section.classList.add('hidden');
+        observer.observe(section);
+    });
+
+    // ----- SCRIPT 2: SCROLL SUAVE -----
+    // Seleccionar todos los enlaces de la navegación y el botón de acción
+    const smoothScrollLinks = document.querySelectorAll('.nav-list a[href^="#"], .cta-button[href^="#"]');
+
+    smoothScrollLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    // ----- SCRIPT 3: POPUP PROMOCIONAL -----
+    const popupOverlay = document.getElementById('bonipuntos-popup');
+    const closeBtn = document.querySelector('.popup-close-btn');
+
+    // Función para abrir el popup
+    function openPopup() {
+        popupOverlay.classList.add('visible');
+    }
+
+    // Función para cerrar el popup
+    function closePopup() {
+        popupOverlay.classList.remove('visible');
+    }
+
+    // Abrir el popup automáticamente después de 3 segundos de carga de la página
+    setTimeout(openPopup, 3000);
+
+    // Cerrar el popup con el botón
+    closeBtn.addEventListener('click', closePopup);
+
+    // Cerrar el popup al hacer clic fuera del contenido
+    popupOverlay.addEventListener('click', (e) => {
+        if (e.target === popupOverlay) {
+            closePopup();
+        }
+    });
+</script>
+</html>
