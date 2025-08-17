@@ -31,21 +31,21 @@
     <h2>Algunas historias que ya programé</h2>
     <div class="portfolio-grid">
         <a href="bonipuntos.php" class="project-card">
-            <img src="bonipuntos-min.png" alt="Bonipuntos" class="project-image">
+            <img src="/bonipuntos-min.png" alt="Bonipuntos" class="project-image">
             <div class="project-info">
                 <h3 class="project-title">Sistema de fielización de clientes</h3>
                 <p class="project-description">Una web que empezó siendo un “quiero algo simple” y terminó siendo un espacio donde la gente se queda a charlar.</p>
             </div>
         </a>
         <a href="valentaffa.php" class="project-card">
-            <img src="valen-min.png" alt="Valen Taffa Store" class="project-image">
+            <img src="/valen-min.png" alt="Valen Taffa Store" class="project-image">
             <div class="project-info">
                 <h3 class="project-title">Tienda online</h3>
                 <p class="project-description">Una tienda online que no parece un supermercado chino de internet. Cada producto tiene historia, y se nota.</p>
             </div>
         </a>
         <a href="vtk.php" class="project-card">
-            <img src="vtk-prev.png" alt="VTK" class="project-image">
+            <img src="/vtk-prev.png" alt="VTK" class="project-image">
             <div class="project-info">
                 <h3 class="project-title">Tienda Online</h3>
                 <p class="project-description">Un sitio donde la estética no le gana al contenido, pero tampoco se queda atrás. Equilibrio, como en la vida.</p>
@@ -82,7 +82,7 @@
 <div id="bonipuntos-popup" class="popup-overlay hidden">
     <div class="popup-content">
         <span class="popup-close-btn">&times;</span>
-        <img src="bonipuntos-min.png" alt="Bonipuntos promoción" class="popup-image">
+        <img src="/bonipuntos-min.png" alt="Bonipuntos promoción" class="popup-image">
         <div class="popup-text">
             <h2>Bonipuntos, tu sistema de fidelización</h2>
             <p>Un proyecto hecho a medida para que premies a tus clientes y los hagas volver una y otra vez. Una web que no parece una web, sino un espacio para charlar.</p>
@@ -90,5 +90,6 @@
         </div>
     </div>
 </div>
+
 
 <?php include 'footer.php'; ?>
