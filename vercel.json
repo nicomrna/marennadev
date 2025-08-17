@@ -8,6 +8,10 @@
   ],
   "routes": [
     {
+      "src": "/(.*\\.(?:css|png|jpg|jpeg|gif|svg|ico|webmanifest|txt))",
+      "dest": "/public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1.php"
     }
