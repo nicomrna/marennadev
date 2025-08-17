@@ -14,7 +14,11 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="Marenna Dev" />
 <link rel="manifest" href="favicon/site.webmanifest" />
-<link rel="stylesheet" href="/styles.css">
+<?php
+$base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+?>
+
+<link rel="stylesheet" href="<?= $base_url ?>/styles.css">
 </head>
 <body>
 
@@ -32,3 +36,4 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
     </header>
 
     <main class="main-content">
+
