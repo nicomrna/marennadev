@@ -1,207 +1,292 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marenna Dev - Desarrollador Web</title>
-    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
-    <link rel="shortcut icon" href="favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Marenna Dev" />
-    <link rel="manifest" href="favicon/site.webmanifest" />
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Marenna Dev — Sistemas y E-commerce con alma</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --papel: #080808;
+      --tinta: #f0f0f0;
+      --gris-soft: #888;
+      --blanco: #ffffff;
+      --serif: 'Merriweather', serif;
+      --sans: 'Montserrat', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--papel); color: var(--tinta);
+      font-family: var(--serif); line-height: 1.8; overflow-x: hidden;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 60px 24px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 80px; border-bottom: 1px solid #1a1a1a; padding-bottom: 30px;
+    }
+    .brand { display: flex; align-items: center; gap: 24px; }
+    .brand img { width: 85px; height: 85px; border-radius: 12px; filter: grayscale(1); }
+    .brand h1 { 
+      font-family: var(--sans); 
+      font-size: 1.8rem; 
+      margin: 0; 
+      letter-spacing: -1.5px; 
+      color: var(--blanco);
+      line-height: 1;
+    }
+
+    .hero h2 {
+      font-family: var(--sans); font-size: clamp(2.3rem, 8vw, 4.2rem);
+      line-height: 0.95; margin-bottom: 40px; letter-spacing: -3px; color: var(--blanco);
+    }
+    .hero p { font-size: 1.35rem; color: var(--gris-soft); margin-bottom: 1.5rem; }
+
+    .label { 
+      font-family: var(--mono); 
+      font-size: 0.85rem; 
+      color: var(--blanco); 
+      margin: 100px 0 40px 0; 
+      display: flex; 
+      align-items: center; 
+      gap: 15px;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+    .label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.3); }
+
+    .laburo-item { margin-bottom: 70px; }
+    .laburo-item h4 { font-family: var(--sans); font-size: 1.9rem; margin: 0 0 10px 0; color: var(--blanco); letter-spacing: -1px; }
+    .laburo-item p { color: var(--gris-soft); font-size: 1.1rem; }
+    .tag { font-family: var(--mono); font-size: 0.7rem; color: var(--blanco); background: #1a1a1a; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; display: inline-block; }
+
+    .cta-box {
+      margin-top: 100px; padding: 45px; background: #0c0c0c;
+      border: 1px solid #151515; border-radius: 12px;
+    }
+    .btn-wa {
+      display: inline-block; background: var(--blanco); color: #000;
+      padding: 18px 36px; font-family: var(--sans); font-weight: 900;
+      text-decoration: none; border-radius: 6px; margin-top: 25px;
+      transition: all 0.3s ease;
+    }
+    .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,255,255,0.05); }
+    .proyecto-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn-proyect {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--blanco);
+      color: var(--blanco);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-proyect:hover {
+      background: var(--blanco);
+      color: #000;
+    }
+
+    .btn-offline {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 8px 16px;
+      border: 1px solid #333;
+      color: #555;
+      border-radius: 4px;
+      cursor: not-allowed;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    footer { 
+      margin-top: 100px; 
+      padding: 60px 0; 
+      border-top: 1px solid #1a1a1a;
+      font-family: var(--mono); 
+      font-size: 0.85rem; 
+      color: var(--blanco); 
+      text-align: center; 
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+      .brand img { width: 60px; height: 60px; }
+      .brand h1 { font-size: 1.4rem; }
+      .hero h2 { letter-spacing: -1px; }
+      .cta-box { padding: 30px; }
+    }
+    .cta-box {
+      margin-top: 120px;
+      padding: 60px;
+      background: linear-gradient(145deg, #0f0f0f 0%, #080808 100%);
+      border: 1px solid #222;
+      border-radius: 4px; /* Menos redondeado para que sea más serio */
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Un detalle de luz sutil en la esquina */
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+    }
+
+    .cta-box h3 {
+      font-family: var(--sans);
+      font-size: 2.5rem;
+      line-height: 1;
+      margin: 0;
+      color: var(--blanco);
+      letter-spacing: -2px;
+    }
+
+    .cta-box p {
+      margin: 30px 0;
+      color: var(--gris-soft);
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 500px;
+    }
+
+    .btn-wa {
+      display: inline-block;
+      background: var(--blanco);
+      color: #000;
+      padding: 22px 45px;
+      font-family: var(--sans);
+      font-weight: 900;
+      text-decoration: none;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .btn-wa:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+  </style>
 </head>
 <body>
 
-    <header class="header">
-        <a href="index.html" class="logo">
-            <img src="logo.png" alt="Marenna Dev Logo">
-        </a>
-        <nav class="nav">
-            <ul class="nav-list">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="#portafolio">Proyectos</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
+  <div class="container">
+    <header class="reveal">
+      <div class="brand">
+        <img src="logo.png" alt="Marenna Dev">
+        <h1>Marenna Dev</h1>
+      </div>
+      <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--gris-soft);">LA PLATA · ARG</div>
     </header>
 
-    <main class="main-content">
+    <main>
+      <article class="hero reveal">
+        <h2>Hago que vender por internet sea tan natural como vender por la ventana de tu casa.</h2>
+        <p>
+          Hay dos formas de estar en internet: tener una página que queda linda en el celular pero no hace nada, o tener una <b>herramienta de laburo</b>. Yo me dedico a la segunda.
+        </p>
+        <p>
+          Ya sea levantando sistemas a medida con <b>PHP y MySQL</b> o configurando tiendas que no fallan como <b>Partner de Tiendanube</b>, mi objetivo es el mismo: que la tecnología trabaje para vos, y no vos para la tecnología.
+        </p>
+      </article>
 
-        <section id="inicio" class="hero">
-            <h1>Hago páginas web como si fueran cuentos.</h1>
-            <p>No me interesa que tu web “se vea profesional”. Me interesa que, cuando alguien entre, sienta que lo están invitando a tu casa y no a un banco. Que se quede, que lea, que entienda quién sos. Después, claro, también que funcione rápido y no explote.</p>
-            <a href="#portafolio" class="cta-button">Mirá lo que ya hice</a>
-        </section>
+      <section>
+  <span class="label">/ MIS PROYECTOS</span>
 
-        <section id="servicios" class="services">
-            <h2>Lo que hago (y lo que no).</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <i class="icon-code"></i>
-                    <h3>Front-end sin disfraces</h3>
-                    <p>La parte que se ve. No pongo fuegos artificiales innecesarios: tipografías limpias, botones que parecen botones y textos que cuentan cosas. Internet no necesita más humo.</p>
-                </div>
-                <div class="service-card">
-                    <i class="icon-server"></i>
-                    <h3>Back-end que no se rompe</h3>
-                    <p>Lo que no se ve, pero sostiene todo. Bases de datos que no lloran, paneles que cualquiera puede usar sin tutoriales eternos, y sistemas que no te dan dolores de cabeza un domingo.</p>
-                </div>
-                <div class="service-card">
-                    <i class="icon-design"></i>
-                    <h3>Diseño con sentido</h3>
-                    <p>No hago dibujitos lindos. Pienso con vos qué querés transmitir, y lo convierto en un sitio que diga algo. Que tenga voz. Que sea tuyo.</p>
-                </div>
-            </div>
-        </section>
+  <div class="laburo-item reveal">
+    <span class="tag">E-COMMERCE · TIENDANUBE PARTNER</span>
+    <h4>VTK Accesorios</h4>
+        <p>
+      Llevamos una marca local al siguiente nivel de escala. No se trató solo de subir productos, sino de <b>optimizar procesos</b>: pulimos la experiencia de navegación para que la compra sea un camino sin piedras. Entendimos que en el e-commerce, cada milisegundo de carga es una duda del cliente, y nosotros eliminamos las dudas con performance. Un sitio que no solo se ve bien, sino que sabe vender.
+    </p>
+    <div class="proyecto-links">
+      <a href="https://tienda.vtkaccesorios.com/" target="_blank" class="btn-proyect">Ver tienda online ↗</a>
+    </div>
+  </div>
 
-        <section id="portafolio" class="portfolio">
-            <h2>Algunas historias que ya programé</h2>
-            <div class="portfolio-grid">
-                <a href="bonipuntos.html" class="project-card">
-                    <img src="bonipuntos-min.png" alt="Bonipuntos" class="project-image">
-                    <div class="project-info">
-                        <h3 class="project-title">Sistema de fielización de clientes</h3>
-                        <p class="project-description">Una web que empezó siendo un “quiero algo simple” y terminó siendo un espacio donde la gente se queda a charlar.</p>
-                    </div>
-                </a>
-                <a href="valentaffa.html" class="project-card">
-                    <img src="valen-min.png" alt="Valen Taffa Store" class="project-image">
-                    <div class="project-info">
-                        <h3 class="project-title">Tienda online</h3>
-                        <p class="project-description">Una tienda online que no parece un supermercado chino de internet. Cada producto tiene historia, y se nota.</p>
-                    </div>
-                </a>
-                <a href="vtk.html" class="project-card">
-                    <img src="vtk-prev.png" alt="VTK" class="project-image">
-                    <div class="project-info">
-                        <h3 class="project-title">Tienda Online</h3>
-                        <p class="project-description">Un sitio donde la estética no le gana al contenido, pero tampoco se queda atrás. Equilibrio, como en la vida.</p>
-                    </div>
-                </a>
-            </div>
-        </section>
+  <div class="laburo-item reveal">
+    <span class="tag">E-COMMERCE · TIENDANUBE PARTNER</span>
+    <h4>Valen Taffa Store</h4>
+    <p>
+      Si Valen Taffa vende indumentaria y deco personalizada, era un pecado que su casa digital fuera genérica. Creamos la <b>Store Oficial</b> bajo un concepto de identidad absoluta. Me enfoqué en que la plataforma reflejara la misma dedicación que Valen le pone a cada objeto. El resultado es un espacio donde la marca respira y el usuario siente que está comprando algo único, no un código de barras. Un tipazo, y una tienda a la altura.
+    </p>
+    <div class="proyecto-links">
+      <a href="https://valentaffa.store/" target="_blank" class="btn-proyect">Ver tienda online ↗</a>
+    </div>
+  </div>
 
-        <section id="testimonios" class="testimonials">
-            <h2>Lo que dicen los que confiaron</h2>
-            <div class="testimonial-card">
-                <p>
-                    “Yo quería una web normalita, de esas que tienen un par de fotos y un botón de WhatsApp escondido abajo.  
-                    Pero terminé con algo raro: un lugar donde mis clientes me escriben como si ya me conocieran de toda la vida.  
-                    No sé qué pasó: si la magia está en el diseño, en los textos o en la cabeza de este tipo.  
-                    Lo único que sé es que ahora me saludan con confianza, como si la página hubiera armado una mesa de café en vez de un formulario de contacto.”
-                </p>
-                <p class="client-name">— Cliente que no esperaba tanto</p>
-            </div>
-        </section>
+  <div class="laburo-item reveal">
+    <span class="tag">SISTEMAS A MEDIDA · PHP / MYSQL</span>
+    <h4>Gestión Casa Barella</h4>
+    <p>
+      Una institución de Teatro es un organismo vivo: cientos de alumnos, decenas de profesores, talleres que se cruzan y pagos que tienen que ser exactos. Desarrollé un <b>sistema robusto</b> para organizar ese caos. Es código artesanal, pensado desde el mostrador hacia adentro. Nada de soluciones enlatadas; acá cada función responde a una necesidad real de la administración, diseñado para aguantar el trajín diario de las clases sin quejas ni reproches.
+    </p>
+    <div class="proyecto-links">
+      <span class="btn-offline">● Acceso Privado</span>
+    </div>
+  </div>
 
+  <div class="laburo-item reveal">
+    <span class="tag">SISTEMAS A MEDIDA · PHP / MYSQL</span>
+    <h4>Intranet de Servicio Técnico</h4>
+    <p>
+      Transformamos el mostrador lleno de papeles y cuadernos anotados en una <b>base de datos cristalina</b>. Este sistema permite gestionar órdenes de servicio, estados de reparación en tiempo real y presupuestos automáticos. Es la diferencia entre decirle al cliente "volvé mañana a ver si está" y enviarle un mensaje automático avisando que su equipo está listo. Un panel de control que le devuelve al dueño del negocio lo más valioso: su tiempo.
+    </p>
+    <div class="proyecto-links">
+      <span class="btn-offline">● Acceso Privado</span>
+    </div>
+  </div>
+</section>
 
-        <section id="acerca-de" class="about">
-            <h2>Quién soy (y por qué hago esto)</h2>
-            <p>No soy una agencia, ni un equipo multidisciplinario, ni tengo un slide de misión y visión. Soy uno solo, con la manía de contar historias en formato digital. Me gustan los sitios honestos, con personalidad. Trabajo escuchando primero, programando después. Y nunca al revés.</p>
-        </section>
+      <section class="cta-box reveal">
+  <h3>¿Tu web es una herramienta o un problema?</h3>
+  
+  <p>
+    Si hoy sentís que tu negocio es un lío de planillas que no se entienden o tenés una tienda que te da más dolores de cabeza que ventas, escribime. 
+    <b>No te voy a vender espejitos de colores.</b> Nos sentamos, vemos qué es lo que hoy te traba el crecimiento y lo resolvemos con código sólido.
+  </p>
 
-        <section id="contacto" class="contact-cta">
-            <h2>Escribime, pero de verdad</h2>
-            <p>Si me mandás un mensaje, no te va a contestar un bot, ni una secretaria, ni un “estimado cliente”. Voy a ser yo, con mate en mano, charlando de tu proyecto.</p>
-            <a href="https://api.whatsapp.com/send/?phone=542317402288&text&type=phone_number&app_absent=0" class="cta-button">Quiero charlar con vos</a>
-        </section>
-
-        <div id="bonipuntos-popup" class="popup-overlay hidden">
-            <div class="popup-content">
-                <span class="popup-close-btn">&times;</span>
-                <img src="bonipuntos-min.png" alt="Bonipuntos promoción" class="popup-image">
-                <div class="popup-text">
-                    <h2>Bonipuntos, tu sistema de fidelización</h2>
-                    <p>Un proyecto hecho a medida para que premies a tus clientes y los hagas volver una y otra vez. Una web que no parece una web, sino un espacio para charlar.</p>
-                    <a href="bonipuntos.html" class="popup-cta-btn">Ver el proyecto</a>
-                </div>
-            </div>
-        </div>
+  <a href="https://wa.me/542317402288" class="btn-wa">HABLEMOS POR WHATSAPP</a>
+</section>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2025 Marenna Dev. Todos los derechos reservados.</p>
+    <footer class="reveal">
+      MARENNA DEV · <span id="year"></span> · PARTNER OFICIAL TIENDANUBE · LA PLATA
     </footer>
+  </div>
 
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
-
-<script>
-    /*
-        UNIFICACIÓN DE SCRIPTS
-        ========================================================
-        1. Animación al hacer scroll (para las secciones)
-        2. Scroll suave para los enlaces del header y el botón CTA
-        3. Popup promocional
-    */
-
-    // ----- SCRIPT 1: ANIMACIÓN AL HACER SCROLL -----
-    const sections = document.querySelectorAll('section');
-
-    const observerOptions = {
-        root: null,
-        threshold: 0.2,
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => {
-        section.classList.add('hidden');
-        observer.observe(section);
-    });
-
-    // ----- SCRIPT 2: SCROLL SUAVE -----
-    // Seleccionar todos los enlaces de la navegación y el botón de acción
-    const smoothScrollLinks = document.querySelectorAll('.nav-list a[href^="#"], .cta-button[href^="#"]');
-
-    smoothScrollLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    // ----- SCRIPT 3: POPUP PROMOCIONAL -----
-    const popupOverlay = document.getElementById('bonipuntos-popup');
-    const closeBtn = document.querySelector('.popup-close-btn');
-
-    // Función para abrir el popup
-    function openPopup() {
-        popupOverlay.classList.add('visible');
-    }
-
-    // Función para cerrar el popup
-    function closePopup() {
-        popupOverlay.classList.remove('visible');
-    }
-
-    // Abrir el popup automáticamente después de 3 segundos de carga de la página
-    setTimeout(openPopup, 3000);
-
-    // Cerrar el popup con el botón
-    closeBtn.addEventListener('click', closePopup);
-
-    // Cerrar el popup al hacer clic fuera del contenido
-    popupOverlay.addEventListener('click', (e) => {
-        if (e.target === popupOverlay) {
-            closePopup();
-        }
-    });
-</script>
 </html>
