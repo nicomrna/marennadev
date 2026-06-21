@@ -11,7 +11,7 @@
   <style>
     :root{
       --bg:#f7f4ee;
-      --surface:#ffffff;
+      --surface:rgba(255,255,255,.88);
       --surface-2:#fcfbf7;
       --text:#1d1d1b;
       --muted:#6f6a62;
@@ -24,7 +24,6 @@
       --shadow:0 22px 60px -24px rgba(18,16,12,.18);
       --shadow-soft:0 14px 36px -24px rgba(18,16,12,.12);
       --radius:24px;
-      --radius-sm:16px;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -138,7 +137,7 @@
     .summary-card,
     .cta-box,
     .section{
-      background:rgba(255,255,255,.86);
+      background:var(--surface);
       border:1px solid var(--border);
       border-radius:var(--radius);
       box-shadow:var(--shadow-soft);
@@ -606,51 +605,61 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    function buildDownloadSource() {
-      const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-      return new Blob([html], { type: 'text/html;charset=utf-8' });
-    }
+    async function downloadFile() {
+      const btns = [document.getElementById('btnDownload'), document.getElementById('btnDownloadMobile')].filter(Boolean);
+      const original = btns.map(btn => btn.innerHTML);
 
-    function triggerDownload(filename) {
-      const blob = buildDownloadSource();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1500);
-    }
+      btns.forEach(btn => {
+        btn.setAttribute('aria-busy', 'true');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ti ti-loader-2 ti-spin"></i> Preparando copia...';
+      });
 
-    async function handleDownload(e) {
-      e.preventDefault();
-      const btn = e.currentTarget;
-      const original = btn.innerHTML;
-
-      btn.setAttribute('aria-busy', 'true');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="ti ti-loader-2 ti-spin"></i> Preparando copia...';
       navigator.vibrate?.(20);
 
       try {
-        triggerDownload('marepay.html');
-        btn.innerHTML = '<i class="ti ti-check"></i> Descargado';
-        setTimeout(() => {
-          btn.innerHTML = original;
+        const response = await fetch('./mareplay.html', { cache: 'no-store' });
+        if (!response.ok) throw new Error('download-not-ready');
+
+        const text = await response.text();
+        const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'mareplay.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+        btns.forEach((btn, i) => {
+          btn.innerHTML = '<i class="ti ti-check"></i> Descargado';
+          setTimeout(() => {
+            btn.innerHTML = original[i];
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+          }, 1800);
+        });
+      } catch (error) {
+        const a = document.createElement('a');
+        a.href = './mareplay.html';
+        a.download = 'mareplay.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        btns.forEach((btn, i) => {
+          btn.innerHTML = original[i];
           btn.disabled = false;
           btn.removeAttribute('aria-busy');
-        }, 1800);
-      } catch (error) {
-        console.error(error);
-        btn.innerHTML = original;
-        btn.disabled = false;
-        btn.removeAttribute('aria-busy');
+        });
       }
     }
 
-    document.getElementById('btnDownload').addEventListener('click', handleDownload);
-    document.getElementById('btnDownloadMobile').addEventListener('click', handleDownload);
+    document.getElementById('btnDownload').addEventListener('click', downloadFile);
+    document.getElementById('btnDownloadMobile').addEventListener('click', downloadFile);
   </script>
 </body>
 </html>
