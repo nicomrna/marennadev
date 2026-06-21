@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MarePay — Ser dueños de nuestro propio desorden</title>
+  <title>MarePay — Tus números en tu propia casa</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
@@ -16,8 +16,8 @@
       --border: rgba(28, 28, 26, 0.08);
       --primary: #1c1c1a;
       --primary-hover: #3a3a35;
-      --accent: #0f6e56;
-      --accent-light: #e1f5ee;
+      --accent: #b27b12;
+      --accent-light: #fdf6e2;
       --shadow: 0 20px 40px -15px rgba(0,0,0,0.03);
     }
 
@@ -37,7 +37,6 @@
       padding: 5rem 1.25rem;
     }
 
-    /* Diseño e Identidad */
     header {
       text-align: center;
       margin-bottom: 4rem;
@@ -73,7 +72,7 @@
       margin: 0 auto;
     }
 
-    /* Crónica / Texto estilo Casciari */
+    /* Crónica estilo Casciari */
     .cronica {
       font-size: 15px;
       color: var(--text);
@@ -88,7 +87,7 @@
       color: var(--primary);
     }
 
-    /* Caja de Conversión (CTA) */
+    /* Sección de conversión */
     .cta-box {
       background: var(--card);
       border: 1px solid var(--border);
@@ -99,12 +98,12 @@
       box-shadow: var(--shadow);
     }
 
-    .tag-pro {
+    .tag-price {
       font-size: 12px;
       font-weight: 600;
       color: var(--accent);
       background: var(--accent-light);
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 6px;
       display: inline-block;
       margin-bottom: 1rem;
@@ -154,7 +153,7 @@
       margin-top: 1.25rem;
     }
 
-    /* Características / Manifiesto */
+    /* Características */
     .features {
       margin-bottom: 4rem;
     }
@@ -196,7 +195,6 @@
       color: var(--muted);
     }
 
-    /* Footer */
     footer {
       padding-top: 2rem;
       border-top: 1px solid var(--border);
@@ -226,73 +224,74 @@
       <div class="brand-badge">
         <i class="ti ti-file-invoice"></i> MarePay
       </div>
-      <h1>El arte de no regalarle tus números a un desconocido</h1>
-      <p class="lead">Un registro de gastos íntimo, sin nubes sospechosas y que corre directo en tu computadora.</p>
+      <h1>El arte de saber a dónde se te va la plata sin pedirle permiso a nadie</h1>
+      <p class="lead">Un sistema de control de gastos privado, sin empresas raras metiendo las narices y que manejás vos desde tu escritorio.</p>
     </header>
 
     <main>
       <section class="cronica">
-        <p>A mí me da desconfianza la gente que tiene toda su vida metida en Silicon Valley. Esos que le cuentan a una aplicación en la nube cuánto pagan de luz, cuándo vence el alquiler o cuántas tarjetas deben, como si del otro lado hubiera un contador de confianza y no un algoritmo frío diseñado para venderles colchones en oferta en base a sus desgracias financieras.</p>
+        <p>A mí me da una desconfianza bárbara la gente que anota su vida en internet. Esos que se bajan una aplicación de moda para contarle a un servidor que vaya a saber uno dónde queda, cuánto pagan de luz, cuándo vence la patente del auto o a cuántos meses financiaron el lavarropas. Le regalan sus números al mundo como si del otro lado hubiera un tío de confianza cuidándoles el bolsillo, y no un montón de tipos desconocidos viendo qué publicidad encajarles según sus deudas.</p>
         
-        <p>Nuestros abuelos anotaban los gastos con un lápiz de mina gorda en un cuaderno de almacenero con espiral. Había una dignidad hermosa en ese desorden doméstico. Nadie venía a mirar. Nadie usaba tus deudas para alimentar la inteligencia artificial de una corporación multinacional.</p>
+        <p>Mi abuelo Chichín llevaba las cuentas con un lápiz de mina gorda, de esos de carpintero, en un cuaderno de almacenero con espiral. Había una dignidad hermosa en ese desorden familiar. Nadie venía a mirar desde afuera. Nadie usaba sus datos para venderle nada.</p>
         
-        <p><strong>MarePay nace para recuperar esa soberanía.</strong> No es una plataforma moderna con suscripción obligatoria ni alertas invasivas que te rompen la paciencia un domingo a la tarde. Es un archivo único, limpio, que descargás una sola vez en tu PC y se queda con vos para siempre. Funciona de manera local, en tu propia computadora, lejos de los ojos del mundo.</p>
+        <p><strong>MarePay es eso, pero en la computadora.</strong> No es una plataforma moderna con suscripciones mensuales que te muerden la tarjeta todos los meses ni alertas pesadas que te rompen la paciencia un domingo a la tarde. Te bajás el archivo una sola vez, lo abrís en tu PC y funciona ahí adentro, en tu casa, sin salir a internet. Cuesta sesenta dólares. Ni más ni menos que lo que vale la tranquilidad de que tu desorden financiero sea tuyo, y de nadie más.</p>
       </section>
 
+      <!-- CAJA DE CONVERSIÓN -->
       <section class="cta-box">
-        <span class="tag-pro">Licencia de por vida — Sin suscripciones</span>
-        <h2>Descargá tu copia autónoma de MarePay</h2>
+        <span class="tag-price">Licencia Comercial — 60 USD</span>
+        <h2>Descargá la aplicación e ingresá tu clave</h2>
         
         <button id="btnDownload" class="download-btn">
           <i class="ti ti-download"></i>
-          Descargar aplicación (.html)
+          Descargar MarePay (.html)
         </button>
 
         <p class="meta-note">
-          Un único archivo liviano listo para abrir, usar y resguardar en tu PC.
+          Se descarga un archivo único y liviano. Lo abrís en tu PC, ponés tu licencia y empezás a ordenar tus cuentas hoy mismo.
         </p>
       </section>
 
       <section class="features">
-        <h3>Cómo funciona este sistema</h3>
+        <h3>Qué estás comprando exactamente</h3>
         
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-lock-square"></i></div>
           <div class="feat-text">
-            <h4>Privacidad absoluta e inviolable</h4>
-            <p>MarePay guarda todo dentro del almacenamiento local de tu propio navegador web (LocalStorage). Tus datos financieros nunca viajan por internet, no tocan nubes externas ni quedan expuestos.</p>
+            <h4>Privacidad real (de la vieja escuela)</h4>
+            <p>MarePay guarda todo en el disco de tu propia computadora usando el almacenamiento de tu navegador. Tus gastos, deudas y vencimientos nunca viajan por internet, no tocan nubes externas ni quedan flotando por ahí.</p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-chart-bar"></i></div>
           <div class="feat-text">
-            <h4>Historial dinámico de 12 meses</h4>
-            <p>Gráficos automatizados y claros que te muestran la radiografía de tu año. Vas a entender exactamente en qué meses se te fue la mano y dónde lograste estabilizar el barco.</p>
+            <h4>Historial de un vistazo</h4>
+            <p>Gráficos limpios que te muestran la radiografía de todo tu año. Para que entiendas de manera gráfica y sin tecnicismos raros en qué meses se te fue la mano y cuándo pudiste enderezar el barco.</p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-calendar-plus"></i></div>
           <div class="feat-text">
-            <h4>Programación de vencimientos inteligentes</h4>
-            <p>Planificá el futuro sin volverte loco. Podés dejar asentados gastos anuales, bimestrales o únicos para meses venideros. El sistema se encarga de recordártelos cuando el almanaque cambie de hoja.</p>
+            <h4>Vencimientos programados</h4>
+            <p>Dejá asentados los gastos fijos, los servicios bimestrales o ese impuesto anual colgado. El sistema se acomoda solo y te avisa qué tenés pendiente apenas el almanaque cambia de hoja.</p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-palette"></i></div>
           <div class="feat-text">
-            <h4>Categorías a tu gusto</h4>
-            <p>Organizá tus cuentas con íconos vectoriales pulidos y colores minimalistas que no te queman la vista. Un panel limpio, ordenado por prioridades (vencidos, pendientes, pagados).</p>
+            <h4>Tus categorías, tus reglas</h4>
+            <p>Organizá tus gastos con íconos claros y colores que no te queman los ojos. Una pantalla ordenada por prioridades básicas: lo que ya venció, lo que está por vencer y lo que ya te sacaste de encima.</p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-copyleft"></i></div>
           <div class="feat-text">
-            <h4>Copia de seguridad en un clic</h4>
-            <p>Exportá e importá toda tu base de datos en un archivo de texto JSON portable. Te llevás tu historial financiero entero metido en un pendrive si cambiás de computadora.</p>
+            <h4>Un respaldo en un segundo</h4>
+            <p>Hacés un clic y te bajás un archivo con todas tus cuentas copiadas. Si cambiás de computadora o formateás, te llevás el archivo en un pendrive, lo cargás y seguís como si nada.</p>
           </div>
         </div>
       </section>
@@ -309,38 +308,36 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // LÓGICA DE DESCARGA AVANZADA BLOB (EVITA EL ERROR DE "ARCHIVO NO DISPONIBLE")
+    // LÓGICA BLOB COMPATIBLE E INMUNE A ERRORES DE SITIO
     document.getElementById('btnDownload').addEventListener('click', async (e) => {
       e.preventDefault();
       const btn = e.currentTarget;
       const originalHTML = btn.innerHTML;
       
       try {
-        btn.innerHTML = '<i class="ti ti-loader-2 ti-spin"></i> Generando descarga...';
+        btn.innerHTML = '<i class="ti ti-loader-2 ti-spin"></i> Preparando archivo...';
         btn.style.pointerEvents = 'none';
 
-        // Solicitamos el archivo de forma nativa mediante fetch
+        // Petición al archivo local en la misma carpeta de Vercel
         const response = await fetch('marepay.html');
-        if (!response.ok) throw new Error('No se pudo encontrar el archivo origen.');
+        if (!response.ok) throw new Error('No se encontró el archivo base.');
         
         const textData = await response.text();
         
-        // Creamos un Blob en memoria simulando el archivo local
+        // Empaquetado dinámico en memoria del cliente
         const blob = new Blob([textData], { type: 'text/html' });
         const objectUrl = URL.createObjectURL(blob);
         
-        // Forzamos la descarga nativa e inmediata desde el navegador del cliente
         const tempLink = document.createElement('a');
         tempLink.href = objectUrl;
         tempLink.download = 'marepay.html';
         document.body.appendChild(tempLink);
         tempLink.click();
         
-        // Limpieza de memoria
         document.body.removeChild(tempLink);
         URL.revokeObjectURL(objectUrl);
 
-        btn.innerHTML = '<i class="ti ti-check"></i> ¡Descargado!';
+        btn.innerHTML = '<i class="ti ti-check"></i> Descargado';
         setTimeout(() => {
           btn.innerHTML = originalHTML;
           btn.style.pointerEvents = 'auto';
@@ -348,7 +345,7 @@
 
       } catch (error) {
         console.error(error);
-        // Fallback clásico si la API Blob llegara a fallar por red externa
+        // Fallback tradicional
         const fallbackLink = document.createElement('a');
         fallbackLink.href = 'marepay.html';
         fallbackLink.download = 'marepay.html';
