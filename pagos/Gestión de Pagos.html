@@ -1,0 +1,914 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-background-tertiary,#f5f5f0);color:var(--color-text-primary,#1a1a18);font-size:14px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.app{max-width:720px;margin:0 auto;padding:1.25rem 1rem 3rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar h1{font-size:18px;font-weight:500}
+.topbar-actions{display:flex;gap:6px}
+.icon-btn{background:var(--color-background-primary,#fff);border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.15));border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary,#666);font-size:16px}
+.icon-btn:hover{background:var(--color-background-secondary,#f0f0ec);color:var(--color-text-primary,#1a1a18)}
+.nav{display:flex;align-items:center;gap:8px;margin-bottom:1.25rem}
+.nav-btn{background:var(--color-background-primary,#fff);border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.15));border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-primary,#1a1a18)}
+.nav-btn:hover{background:var(--color-background-secondary,#f0f0ec)}
+.mes-label{font-size:16px;font-weight:500;flex:1;text-align:center}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.25rem}
+.stat{background:var(--color-background-secondary,#f0f0ec);border-radius:8px;padding:12px 14px}
+.stat .lbl{font-size:11px;color:var(--color-text-secondary,#888);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.stat .val{font-size:22px;font-weight:500}
+.stat.s-warn .val{color:#854f0b}.stat.s-danger .val{color:#a32d2d}.stat.s-ok .val{color:#0f6e56}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.section-hdr span{font-size:12px;font-weight:500;color:var(--color-text-secondary,#888);text-transform:uppercase;letter-spacing:.5px}
+.txt-btn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--color-text-secondary,#888);display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:6px}
+.txt-btn:hover{background:var(--color-background-secondary,#f0f0ec);color:var(--color-text-primary,#1a1a18)}
+.pagos-list{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem}
+.pago-card{background:var(--color-background-primary,#fff);border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.15));border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .12s}
+.pago-card:hover{border-color:var(--color-border-secondary,rgba(0,0,0,0.3))}
+.pago-card.st-pagado{border-left:2.5px solid #1d9e75;border-radius:0 10px 10px 0}
+.pago-card.st-vencido{border-left:2.5px solid #e24b4a;border-radius:0 10px 10px 0}
+.pago-card.st-pendiente{border-left:2.5px solid #ef9f27;border-radius:0 10px 10px 0}
+.cat-icon-wrap{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.pago-info{flex:1;min-width:0}
+.pago-nombre{font-size:14px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pago-meta{font-size:12px;color:var(--color-text-secondary,#888);display:flex;gap:10px;align-items:center}
+.pago-meta i{font-size:13px;vertical-align:-1px}
+.pago-right{text-align:right;flex-shrink:0}
+.pago-monto{font-size:14px;font-weight:500;margin-bottom:3px}
+.badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500;display:inline-block;letter-spacing:.2px}
+.badge.pagado{background:#e1f5ee;color:#085041}.badge.vencido{background:#fcebeb;color:#a32d2d}.badge.pendiente{background:#faeeda;color:#633806}
+.add-row{display:flex;gap:8px;margin-bottom:1.5rem}
+.add-row button{flex:1;padding:9px;border-radius:8px;background:var(--color-background-secondary,#f0f0ec);border:0.5px dashed var(--color-border-secondary,rgba(0,0,0,0.25));cursor:pointer;font-size:13px;color:var(--color-text-secondary,#888);display:flex;align-items:center;justify-content:center;gap:6px}
+.add-row button:hover{background:var(--color-background-primary,#fff);border-style:solid;color:var(--color-text-primary,#1a1a18)}
+.divider{height:0.5px;background:var(--color-border-tertiary,rgba(0,0,0,0.1));margin:1.25rem 0}
+.hist-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.08));font-size:13px}
+.hist-row:last-child{border-bottom:none}
+.hist-mes{min-width:80px;color:var(--color-text-secondary,#888)}
+.hist-bar-wrap{flex:1;background:var(--color-background-secondary,#f0f0ec);border-radius:3px;height:5px}
+.hist-bar{height:5px;background:#1d9e75;border-radius:3px}
+.hist-monto{min-width:90px;text-align:right;font-weight:500}
+.hist-pagados{min-width:40px;text-align:center;color:var(--color-text-secondary,#888);font-size:12px}
+
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--color-background-primary,#fff);border-radius:14px;padding:1.5rem;width:calc(100% - 2rem);max-width:420px;border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.15));max-height:90vh;overflow-y:auto}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.modal-hdr h2{font-size:16px;font-weight:500}
+.field{margin-bottom:11px}
+.field label{font-size:12px;color:var(--color-text-secondary,#888);display:block;margin-bottom:4px}
+.field input,.field select,.field textarea{width:100%;padding:7px 10px;border:0.5px solid var(--color-border-secondary,rgba(0,0,0,0.25));border-radius:8px;font-size:13px;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#1a1a18);font-family:inherit}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#378add;box-shadow:0 0 0 2px rgba(55,138,221,.12)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-row{display:flex;gap:8px;margin-top:1.25rem}
+.btn{flex:1;padding:8px;border-radius:8px;font-size:13px;cursor:pointer;font-weight:500;border:0.5px solid var(--color-border-secondary,rgba(0,0,0,0.25));background:var(--color-background-primary,#fff);color:var(--color-text-primary,#1a1a18);display:flex;align-items:center;justify-content:center;gap:5px}
+.btn:hover{background:var(--color-background-secondary,#f0f0ec)}
+.btn.primary{background:#1a1a18;color:#fff;border-color:#1a1a18}.btn.primary:hover{background:#333}
+.btn.danger{background:#fcebeb;color:#a32d2d;border-color:#f7c1c1}.btn.success{background:#e1f5ee;color:#085041;border-color:#9fe1cb}
+.check-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,.08))}
+.check-row:last-child{border-bottom:none}
+.check-row label{flex:1;font-size:13px;cursor:pointer}
+.check-row input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:#1d9e75}
+.cat-list-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,.08))}
+.cat-list-item:last-child{border-bottom:none}
+.cat-icon-sm{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.cat-name{flex:1;font-size:13px}
+.icon-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;max-height:140px;overflow-y:auto;padding:2px 0}
+.icon-opt{width:34px;height:34px;border-radius:6px;border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.15));display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--color-text-secondary,#888)}
+.icon-opt:hover,.icon-opt.sel{background:var(--color-background-info,#e6f1fb);border-color:#378add;color:#0c447c}
+.color-grid{display:flex;gap:8px;flex-wrap:wrap;padding:4px 0}
+.color-opt{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+.color-opt.sel{border-color:var(--color-text-primary,#1a1a18)}
+.tabs{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,.15));margin-bottom:1rem}
+.tab{padding:8px 14px;font-size:13px;cursor:pointer;color:var(--color-text-secondary,#888);border-bottom:2px solid transparent;margin-bottom:-0.5px}
+.tab.active{color:var(--color-text-primary,#1a1a18);border-bottom-color:var(--color-text-primary,#1a1a18);font-weight:500}
+.export-area{background:var(--color-background-secondary,#f0f0ec);border-radius:8px;padding:12px;font-size:11px;font-family:monospace;color:var(--color-text-secondary,#888);max-height:180px;overflow-y:auto;word-break:break-all;margin-bottom:12px}
+.venc-list{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.venc-item{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--color-background-secondary,#f0f0ec);border-radius:7px;font-size:12px}
+.venc-item .vi-label{flex:1;font-size:13px}
+.venc-item .vi-date{color:var(--color-text-secondary,#888)}
+.venc-item .vi-remove{background:none;border:none;cursor:pointer;color:var(--color-text-secondary,#888);font-size:14px;padding:2px 4px;border-radius:4px;display:flex;align-items:center}
+.venc-item .vi-remove:hover{color:#a32d2d}
+.logo-mark{width:28px;height:28px;border-radius:8px;object-fit:cover;flex-shrink:0;display:block;border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.15));background:var(--color-background-primary,#fff)}
+.logo-fallback{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--color-background-secondary,#f0f0ec);border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.15));font-size:15px;color:var(--color-text-secondary,#666)}
+.app-footer{margin-top:1.5rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.12));display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--color-text-secondary,#888)}
+.app-footer a{color:inherit;text-decoration:none}
+.app-footer a:hover{color:var(--color-text-primary,#1a1a18);text-decoration:underline}
+.footer-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.license-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:var(--color-background-secondary,#f0f0ec);border:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.12));font-size:11px;color:var(--color-text-secondary,#666)}
+.license-pill.valid{background:#e1f5ee;color:#085041;border-color:#bfe8d9}
+.license-pill.warn{background:#faeeda;color:#633806;border-color:#f1d4a9}
+.license-pill.bad{background:#fcebeb;color:#a32d2d;border-color:#f1c0c0}
+.license-callout { background: #f0f0ec; padding: 12px; border-radius: 8px; border-left: 4px solid #888; margin-bottom: 12px; font-size: 13px; }
+.license-callout.valid { background: #e1f5ee; border-left-color: #1d9e75; color: #085041; }
+.license-callout.bad { background: #fcebeb; border-left-color: #e24b4a; color: #a32d2d; }
+.license-field-note { font-size: 11px; color: var(--color-text-secondary,#888); margin-top: 4px; margin-bottom: 12px; }
+</style>
+
+<h2 class="sr-only">Registrador de pagos mensuales con historial y categorías personalizables</h2>
+
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="logo.png" class="logo-mark" alt="Logo de Pagos mensuales" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo-fallback',innerHTML:'<i class=\'ti ti-file-invoice\' aria-hidden=\'true\'></i>'}))">
+      <h1>Pagos mensuales</h1>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="openCats()" title="Gestionar categorías" aria-label="Gestionar categorías"><i class="ti ti-tag"></i></button>
+      <button class="icon-btn" onclick="openLicencia()" title="Licencia" aria-label="Licencia"><i class="ti ti-license"></i></button>
+      <button class="icon-btn" onclick="openExport()" title="Exportar / Importar JSON" aria-label="Exportar datos"><i class="ti ti-download"></i></button>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn" onclick="cambiarMes(-1)" aria-label="Mes anterior"><i class="ti ti-chevron-left"></i></button>
+    <span class="mes-label" id="mesLabel"></span>
+    <button class="nav-btn" onclick="cambiarMes(1)" aria-label="Mes siguiente"><i class="ti ti-chevron-right"></i></button>
+  </div>
+
+  <div class="stats">
+    <div class="stat s-warn"><div class="lbl">Pendientes</div><div class="val" id="sPend">0</div></div>
+    <div class="stat s-danger"><div class="lbl">Vencidos</div><div class="val" id="sVenc">0</div></div>
+    <div class="stat s-ok"><div class="lbl">Pagados</div><div class="val" id="sPag">0</div></div>
+    <div class="stat"><div class="lbl">Total pagado</div><div class="val" id="sTotal">$0</div></div>
+  </div>
+
+  <div class="section-hdr">
+    <span>Servicios</span>
+    <button class="txt-btn" onclick="openFiltro()"><i class="ti ti-adjustments-horizontal" style="font-size:13px"></i> Filtrar</button>
+  </div>
+  <div class="pagos-list" id="pagosList"></div>
+  <div class="add-row">
+    <button onclick="openAgregar()"><i class="ti ti-plus" style="font-size:15px"></i> Agregar servicio</button>
+    <button onclick="openProgramar()"><i class="ti ti-calendar-plus" style="font-size:15px"></i> Programar vencimiento</button>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-hdr"><span>Historial (últimos 12 meses)</span></div>
+  <div id="histList"></div>
+</div>
+
+<footer class="app-footer">
+  <div>© <span id="footerYear"></span> Marenna Dev. Todos los derechos reservados.</div>
+  <div class="footer-links">
+    <a href="https://marennadev.vercel.app/" target="_blank" rel="noreferrer">marennadev.vercel.app</a>
+    <span class="license-pill warn" id="licensePill">Licencia online</span>
+    <a href="#" onclick="openLicencia();return false;">Licencia</a>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="oServicio" onclick="backdropClick('oServicio',event)">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2 id="mServTitle">Agregar servicio</h2>
+    <button class="icon-btn" onclick="closeModal('oServicio')" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="field"><label>Nombre</label><input id="fNombre" type="text" placeholder="Ej: Netflix, Alquiler"></div>
+  <div class="row2">
+    <div class="field"><label>Categoría</label><select id="fCat"></select></div>
+    <div class="field"><label>Frecuencia</label>
+      <select id="fFreq">
+        <option value="mensual">Mensual</option>
+        <option value="bimestral">Bimestral</option>
+        <option value="trimestral">Trimestral</option>
+        <option value="semestral">Semestral</option>
+        <option value="anual">Anual</option>
+        <option value="unico">Único</option>
+      </select>
+    </div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Día de vencimiento</label><input id="fDia" type="number" min="1" max="31" placeholder="15"></div>
+    <div class="field"><label>Monto estimado ($)</label><input id="fMonto" type="number" placeholder="0"></div>
+  </div>
+  <div class="field"><label>Medio de pago</label>
+    <select id="fMedio">
+      <option>Transferencia</option><option>Débito automático</option>
+      <option>Tarjeta de crédito</option><option>Efectivo</option>
+      <option>Mercado Pago</option><option>Débito</option><option>Otro</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Estado</label>
+    <select id="fEstado"><option value="pendiente">Pendiente</option><option value="pagado">Pagado</option></select>
+  </div>
+  <div id="fPagoDetalles" style="display:none">
+    <div class="row2">
+      <div class="field"><label>Fecha de pago</label><input id="fFechaPago" type="date"></div>
+      <div class="field"><label>Monto real ($)</label><input id="fMontoReal" type="number" placeholder="0"></div>
+    </div>
+    <div class="field"><label>Notas</label><input id="fNotas" type="text" placeholder="Opcional"></div>
+  </div>
+  <div class="btn-row" id="btnServRow"></div>
+</div>
+</div>
+
+<div class="modal-backdrop" id="oVencimientos" onclick="backdropClick('oVencimientos',event)">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2>Programar vencimientos</h2>
+    <button class="icon-btn" onclick="closeModal('oVencimientos')" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </div>
+  <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem">Agregá vencimientos para meses futuros. Los servicios del mes actual se copian automáticamente al siguiente cuando lo abrís.</p>
+  <div class="field"><label>Servicio</label><select id="vServicio"></select></div>
+  <div class="row2">
+    <div class="field"><label>Mes</label>
+      <select id="vMes">
+        <option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option>
+        <option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option>
+        <option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option>
+        <option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option>
+      </select>
+    </div>
+    <div class="field"><label>Año</label><input id="vAnio" type="number" min="2024" max="2040"></div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Día de vencimiento</label><input id="vDia" type="number" min="1" max="31"></div>
+    <div class="field"><label>Monto ($)</label><input id="vMonto" type="number" placeholder="0"></div>
+  </div>
+  <div class="venc-list" id="vencList"></div>
+  <div class="btn-row">
+    <button class="btn" onclick="closeModal('oVencimientos')">Cerrar</button>
+    <button class="btn primary" onclick="agregarVencimiento()"><i class="ti ti-calendar-plus"></i> Agregar</button>
+  </div>
+</div>
+</div>
+
+<div class="modal-backdrop" id="oCats" onclick="backdropClick('oCats',event)">
+<div class="modal" style="max-width:460px">
+  <div class="modal-hdr">
+    <h2>Categorías</h2>
+    <button class="icon-btn" onclick="closeModal('oCats')" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </div>
+  <div style="max-height:200px;overflow-y:auto;margin-bottom:12px" id="catListEl"></div>
+  <div style="border-top:0.5px solid var(--color-border-tertiary,rgba(0,0,0,.15));padding-top:12px">
+    <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px" id="catFormTitle">Nueva categoría</p>
+    <div class="field"><label>Nombre</label><input id="cNombre" type="text" placeholder="Ej: Préstamo"></div>
+    <div class="field"><label>Ícono</label><div class="icon-grid" id="iconGrid"></div></div>
+    <div class="field"><label>Color de fondo</label><div class="color-grid" id="colorGrid"></div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn" onclick="cancelEditCat()">Cancelar</button>
+    <button class="btn primary" onclick="guardarCat()" id="btnGuardarCat">Agregar categoría</button>
+  </div>
+</div>
+</div>
+
+<div class="modal-backdrop" id="oExport" onclick="backdropClick('oExport',event)">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2>Exportar / Importar</h2>
+    <button class="icon-btn" onclick="closeModal('oExport')" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('exportar')">Exportar</div>
+    <div class="tab" onclick="switchTab('importar')">Importar</div>
+  </div>
+  <div id="tabExportar">
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px">Copiá el JSON para guardar tus datos o usarlos en otro dispositivo.</p>
+    <div class="export-area" id="exportText"></div>
+    <div class="btn-row">
+      <button class="btn" onclick="closeModal('oExport')">Cerrar</button>
+      <button class="btn primary" onclick="copiarJSON()"><i class="ti ti-copy"></i> Copiar JSON</button>
+    </div>
+  </div>
+  <div id="tabImportar" style="display:none">
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px">Pegá un JSON exportado previamente. Reemplazará todos los datos actuales.</p>
+    <div class="field"><textarea id="importText" style="height:140px;resize:none" placeholder="Pegá el JSON aquí..."></textarea></div>
+    <div class="btn-row">
+      <button class="btn" onclick="closeModal('oExport')">Cancelar</button>
+      <button class="btn primary" onclick="importarJSON()"><i class="ti ti-upload"></i> Importar</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal-backdrop" id="oLicencia" onclick="backdropClick('oLicencia',event)">
+<div class="modal" style="max-width:520px">
+  <div class="modal-hdr">
+    <h2>Licencia</h2>
+    <button class="icon-btn" onclick="closeModal('oLicencia')" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="license-panel">
+    <div id="licenseContext"></div>
+    
+    <div class="license-callout bad" id="licenseStatusBox">
+      <strong id="licenseHeadline">Estado de licencia</strong>
+      <p id="licenseSummary">Sin verificar</p>
+    </div>
+    
+    <div class="field">
+      <label>Código de licencia</label>
+      <input id="licKey" type="text" placeholder="LIC-XXXX-XXXX-XXXX" autocomplete="off">
+    </div>
+    
+    <div class="field">
+      <label>Endpoint de validación</label>
+      <input id="licEndpoint" type="text" value="https://marennadev.vercel.app/licencia/validate" autocomplete="off">
+    </div>
+    
+    <div class="license-field-note">
+      Oferta de lanzamiento: <strong>USD 60</strong>. Si todavía no tenés licencia, podés solicitarla directamente por WhatsApp.
+    </div>
+    
+    <div class="field">
+      <label>Estado actual del sistema</label>
+      <input id="licState" type="text" readonly value="Sin verificar">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="window.open('https://wa.me/542317402288','_blank','noopener')">
+        <i class="ti ti-brand-whatsapp"></i> WhatsApp
+      </button>
+      <button class="btn primary" onclick="guardarYVerificarLicencia()">
+        <i class="ti ti-shield-check"></i> Validar licencia
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal-backdrop" id="oFiltro" onclick="backdropClick('oFiltro',event)">
+<div class="modal" style="max-width:340px">
+  <div class="modal-hdr">
+    <h2>Filtrar servicios</h2>
+    <button class="icon-btn" onclick="closeModal('oFiltro')" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="field"><label>Estado</label><div id="filtroEstados"></div></div>
+  <div class="field"><label>Categoría</label><div id="filtroCats"></div></div>
+  <div class="btn-row">
+    <button class="btn" onclick="resetFiltros()">Limpiar</button>
+    <button class="btn primary" onclick="aplicarFiltros()">Aplicar</button>
+  </div>
+</div>
+</div>
+
+<script>
+const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const ICONS_CAT=['ti-bolt','ti-flame','ti-wifi','ti-home','ti-building','ti-credit-card','ti-player-play','ti-shield','ti-car','ti-stethoscope','ti-school','ti-shopping-cart','ti-device-mobile','ti-water','ti-dog','ti-leaf','ti-music','ti-book','ti-report-money','ti-tools'];
+const COLORS=[{bg:'#faeeda'},{bg:'#fcebeb'},{bg:'#e6f1fb'},{bg:'#e1f5ee'},{bg:'#eeedfe'},{bg:'#fbeaf0'},{bg:'#eaf3de'},{bg:'#f1efe8'},{bg:'#faece7'}];
+
+let mesActual=new Date().getMonth(), anioActual=new Date().getFullYear();
+let editServIdx=null, editCatIdx=null;
+let selIcon='ti-bolt', selColor='#faeeda';
+let filtroEstados=['pendiente','vencido','pagado'], filtroCats=null;
+
+document.getElementById('footerYear').textContent = anioActual;
+
+function defaultCats(){return[
+  {id:'luz',nombre:'Luz',icon:'ti-bolt',color:'#faeeda'},
+  {id:'gas',nombre:'Gas',icon:'ti-flame',color:'#fcebeb'},
+  {id:'internet',nombre:'Internet',icon:'ti-wifi',color:'#e6f1fb'},
+  {id:'alquiler',nombre:'Alquiler',icon:'ti-home',color:'#e1f5ee'},
+  {id:'expensas',nombre:'Expensas',icon:'ti-building',color:'#eeedfe'},
+  {id:'tarjeta',nombre:'Tarjeta',icon:'ti-credit-card',color:'#fbeaf0'},
+  {id:'streaming',nombre:'Streaming',icon:'ti-player-play',color:'#eaf3de'},
+  {id:'seguro',nombre:'Seguro',icon:'ti-shield',color:'#e6f1fb'},
+  {id:'otros',nombre:'Otros',icon:'ti-dots',color:'#f1efe8'},
+];}
+function defaultServicios(){return[
+  {id:1,nombre:'Luz',cat:'luz',freq:'mensual',dia:18,monto:76500,medio:'Transferencia'},
+  {id:2,nombre:'Gas',cat:'gas',freq:'mensual',dia:23,monto:6800,medio:'Transferencia'},
+  {id:3,nombre:'Internet',cat:'internet',freq:'mensual',dia:13,monto:31000,medio:'Transferencia'},
+  {id:4,nombre:'Alquiler',cat:'alquiler',freq:'mensual',dia:8,monto:380000,medio:'Transferencia'},
+  {id:5,nombre:'Expensas',cat:'expensas',freq:'mensual',dia:11,monto:69900,medio:'Transferencia'},
+];}
+
+function loadDB(){try{const r=localStorage.getItem('pagosDB_v2');return r?JSON.parse(r):null}catch(e){return null}}
+function saveDB(){try{localStorage.setItem('pagosDB_v2',JSON.stringify(DB))}catch(e){}}
+function initDB(){const s=loadDB();if(s&&s.version)return s;return{version:3,categorias:defaultCats(),servicios:defaultServicios(),meses:{},vencimientos:[]};}
+let DB=initDB();
+
+const LICENSE_STORAGE_KEY='pagos_mensuales_pro_license_key';
+const DEVICE_ID_KEY='pagos_mensuales_pro_device_id';
+const DEFAULT_LICENSE_ENDPOINT='https://marennadev.vercel.app/licencia/validate';
+let LICENSE_STATE={active:false,validUntil:null,message:'Sin verificar'};
+let LICENSE_MODAL_CONTEXT='view';
+
+function formatDateDMY(input){
+  if(!input) return null;
+  const d = input instanceof Date ? input : new Date(input);
+  if(Number.isNaN(d.getTime())) return null;
+  return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+}
+function parseExpiry(data){
+  const candidate = data?.validUntil ?? data?.expiresAt ?? data?.expirationDate ?? data?.expires ?? data?.hasta ?? data?.vencimiento;
+  return formatDateDMY(candidate);
+}
+function getDeviceId(){
+  try{
+    let id=localStorage.getItem(DEVICE_ID_KEY);
+    if(!id){
+      id=(crypto?.randomUUID?.()||('dev_'+Date.now().toString(36)+Math.random().toString(36).slice(2))).toUpperCase();
+      localStorage.setItem(DEVICE_ID_KEY,id);
+    }
+    return id;
+  }catch(e){
+    return 'dev_'+Date.now().toString(36);
+  }
+}
+function loadLicenseState(){
+  try{
+    const raw=localStorage.getItem(LICENSE_STORAGE_KEY+'_meta');
+    if(!raw) return;
+    const meta=JSON.parse(raw);
+    if(meta && typeof meta === 'object'){
+      LICENSE_STATE={
+        active:!!meta.active,
+        validUntil:meta.validUntil||null,
+        message:meta.message||(
+          meta.active && meta.validUntil
+            ? `Licencia válida hasta ${meta.validUntil}`
+            : 'Sin verificar'
+        )
+      };
+    }
+  }catch(e){}
+}
+function saveLicenseState(state){
+  LICENSE_STATE={...LICENSE_STATE,...state};
+  try{localStorage.setItem(LICENSE_STORAGE_KEY+'_meta',JSON.stringify(LICENSE_STATE));}catch(e){}
+  renderLicenseUI();
+}
+function setLicensePill(state,text){
+  const pill=document.getElementById('licensePill');
+  if(!pill) return;
+  pill.classList.remove('valid','warn','bad');
+  pill.classList.add(state);
+  pill.textContent=text;
+}
+function renderLicenseUI(){
+  const stateEl=document.getElementById('licState');
+  const msg=LICENSE_STATE.active
+    ? `Licencia válida hasta ${LICENSE_STATE.validUntil || 'dd/mm/aaaa'}`
+    : (LICENSE_STATE.message || 'Sin verificar');
+  if(stateEl) stateEl.value=msg;
+  if(LICENSE_STATE.active){
+    setLicensePill('valid', msg);
+  }else if(LICENSE_STATE.message && LICENSE_STATE.message !== 'Sin verificar'){
+    setLicensePill('bad', LICENSE_STATE.message);
+  }else{
+    setLicensePill('warn', 'Licencia requerida');
+  }
+}
+function syncLicenseModal(){
+  const licKey=document.getElementById('licKey');
+  const licEndpoint=document.getElementById('licEndpoint');
+  const ctx=document.getElementById('licenseContext');
+  const headline=document.getElementById('licenseHeadline');
+  const summary=document.getElementById('licenseSummary');
+  const statusBox=document.getElementById('licenseStatusBox');
+  const stateEl=document.getElementById('licState');
+
+  if(licKey && !licKey.value) licKey.value=localStorage.getItem(LICENSE_STORAGE_KEY)|| '';
+  if(licEndpoint && !licEndpoint.value) licEndpoint.value=DEFAULT_LICENSE_ENDPOINT;
+
+  const validText=LICENSE_STATE.validUntil ? `Licencia válida hasta ${LICENSE_STATE.validUntil}` : 'Licencia válida hasta dd/mm/aaaa';
+  const displayMsg=LICENSE_STATE.active ? validText : (LICENSE_STATE.message || 'Sin verificar');
+
+  if(LICENSE_STATE.active){
+    if(ctx) ctx.innerHTML='';
+    if(headline) headline.textContent='Licencia activa';
+    if(summary) summary.textContent=validText;
+    if(statusBox){
+      statusBox.className = 'license-callout valid';
+    }
+  }else{
+    if(ctx){
+      ctx.innerHTML = LICENSE_MODAL_CONTEXT === 'blocked'
+        ? `<div class="license-callout bad"><strong>Primero debés obtener licencia para poder realizar cambios.</strong><p>Consíguela por WhatsApp y activá tu instalación.</p></div>`
+        : '';
+    }
+    if(headline) headline.textContent='Sin licencia activa';
+    if(summary) summary.textContent='Ingresá tu código para validarla contra el servidor.';
+    if(statusBox){
+      statusBox.className = 'license-callout bad';
+    }
+  }
+
+  if(stateEl) stateEl.value = displayMsg;
+}
+function openLicencia(context='view'){
+  LICENSE_MODAL_CONTEXT=context;
+  syncLicenseModal();
+  openModal('oLicencia');
+  setTimeout(()=>{
+    const licKey=document.getElementById('licKey');
+    if(licKey) licKey.focus();
+  },50);
+}
+async function guardarYVerificarLicencia(){
+  const licKey=document.getElementById('licKey');
+  const licEndpoint=document.getElementById('licEndpoint');
+  const stateEl=document.getElementById('licState');
+  const code=(licKey?.value||'').trim();
+  const endpoint=(licEndpoint?.value||DEFAULT_LICENSE_ENDPOINT).trim() || DEFAULT_LICENSE_ENDPOINT;
+
+  try{localStorage.setItem(LICENSE_STORAGE_KEY, code);}catch(e){}
+  if(!code){
+    if(stateEl) stateEl.value='Ingresá el código de licencia';
+    if(licKey) licKey.focus();
+    setLicensePill('warn','Licencia requerida');
+    return;
+  }
+
+  if(stateEl) stateEl.value='Verificando...';
+  setLicensePill('warn','Verificando...');
+  try{
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),12000);
+    const res=await fetch(endpoint,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        code,
+        licenseKey:code,
+        product:'pagos_mensuales_pro_v2',
+        origin:location.origin,
+        deviceId:getDeviceId()
+      }),
+      signal:controller.signal
+    });
+    clearTimeout(timeout);
+
+    const raw=await res.text();
+    let data={};
+    try{ data = raw ? JSON.parse(raw) : {}; }catch(e){ data = {message: raw}; }
+
+    if(!res.ok){
+      throw new Error(data?.message || `HTTP ${res.status}`);
+    }
+
+    const active = !!(data.active ?? data.valid ?? data.ok ?? data.success ?? data.status === 'valid');
+    const validUntil = parseExpiry(data) || (active ? 'dd/mm/aaaa' : null);
+    const message = active
+      ? `Licencia válida hasta ${validUntil || 'dd/mm/aaaa'}`
+      : (data.message || data.error || 'Licencia inválida');
+
+    saveLicenseState({
+      active,
+      validUntil: active ? (validUntil || 'dd/mm/aaaa') : null,
+      message
+    });
+    syncLicenseModal();
+    if(active) render();
+  }catch(err){
+    const msg = err?.name === 'AbortError'
+      ? 'No se pudo verificar: tiempo de espera agotado'
+      : (err?.message || 'No se pudo verificar la licencia');
+    saveLicenseState({active:false,validUntil:null,message:msg});
+    syncLicenseModal();
+  }
+}
+function requireLicense(){
+  if(LICENSE_STATE.active) return true;
+  openLicencia('blocked');
+  return false;
+}
+
+function getServicio(id){return DB.servicios.find(s=>s.id===id)}
+function getCat(id){return DB.categorias.find(c=>c.id===id)||{nombre:'?',icon:'ti-dots',color:'#f1efe8'}}
+function getMesPagos(m,a){
+  const k=`${a}_${m}`;
+  if(!DB.meses[k]){DB.meses[k]=DB.servicios.map(s=>({id:s.id,estado:'pendiente',fechaPago:null,montoReal:null,notas:''}));saveDB();}
+  return DB.meses[k];
+}
+function saveMesPagos(m,a,p){DB.meses[`${a}_${m}`]=p;saveDB();}
+
+function estadoCalc(estado,dia,m,a){
+  if(estado==='pagado') return 'pagado';
+  const hoy=new Date(), venc=new Date(a,m,dia||28);
+  if(venc<hoy) return 'vencido';
+  return 'pendiente';
+}
+function formatPeso(n){if(!n&&n!==0)return '—';return '$'+Math.round(n).toLocaleString('es-AR');}
+function darken(hex){hex=hex.replace('#','');let r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);r=Math.max(0,r-90);g=Math.max(0,g-90);b=Math.max(0,b-90);return((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}
+
+function render(){
+  const pagos=getMesPagos(mesActual,anioActual);
+  document.getElementById('mesLabel').textContent=MESES[mesActual]+' '+anioActual;
+  let pend=0,venc=0,pag=0,total=0;
+  pagos.forEach(p=>{
+    const s=getServicio(p.id);if(!s)return;
+    const est=estadoCalc(p.estado,s.dia,mesActual,anioActual);
+    if(est==='pagado'){pag++;total+=p.montoReal||s.monto||0;}
+    else if(est==='vencido') venc++;
+    else pend++;
+  });
+  document.getElementById('sPend').textContent=pend;
+  document.getElementById('sVenc').textContent=venc;
+  document.getElementById('sPag').textContent=pag;
+  document.getElementById('sTotal').textContent=formatPeso(total);
+  renderLista(pagos);
+  renderHistorial();
+  renderLicenseUI();
+}
+
+function renderLista(pagos){
+  const lista=document.getElementById('pagosList');
+  const filtrados=pagos.filter(p=>{
+    const s=getServicio(p.id);if(!s)return false;
+    const est=estadoCalc(p.estado,s.dia,mesActual,anioActual);
+    if(!filtroEstados.includes(est))return false;
+    if(filtroCats&&!filtroCats.includes(s.cat))return false;
+    return true;
+  });
+  if(!filtrados.length){lista.innerHTML='<div style="text-align:center;padding:2rem;color:var(--color-text-secondary,#888);font-size:13px"><i class="ti ti-inbox" style="font-size:24px;display:block;margin-bottom:8px"></i>Sin servicios. Agregá el primero.</div>';return;}
+  filtrados.sort((a,b)=>{
+    const sa=getServicio(a.id),sb=getServicio(b.id);
+    const ea=estadoCalc(a.estado,sa?.dia,mesActual,anioActual),eb=estadoCalc(b.estado,sb?.dia,mesActual,anioActual);
+    const ord={vencido:0,pendiente:1,pagado:2};
+    return(ord[ea]||1)-(ord[eb]||1)||(sa?.dia||0)-(sb?.dia||0);
+  });
+  lista.innerHTML=filtrados.map(p=>{
+    const s=getServicio(p.id);if(!s)return '';
+    const c=getCat(s.cat);
+    const est=estadoCalc(p.estado,s.dia,mesActual,anioActual);
+    const monto=p.montoReal||s.monto;
+    const idx=pagos.indexOf(p);
+    return `<div class="pago-card st-${est}" onclick="openEditar(${idx})" role="button" tabindex="0">
+      <div class="cat-icon-wrap" style="background:${c.color}"><i class="ti ${c.icon}" style="font-size:16px;color:#${darken(c.color)}"></i></div>
+      <div class="pago-info">
+        <div class="pago-nombre">${s.nombre}</div>
+        <div class="pago-meta">
+          ${s.dia?`<span><i class="ti ti-calendar-event"></i> Vence el ${s.dia}</span>`:''}
+          ${s.medio?`<span><i class="ti ti-credit-card"></i> ${s.medio}</span>`:''}
+          ${p.fechaPago?`<span><i class="ti ti-check"></i> ${p.fechaPago}</span>`:''}
+        </div>
+      </div>
+      <div class="pago-right">
+        <div class="pago-monto">${formatPeso(monto)}</div>
+        <span class="badge ${est}">${est.charAt(0).toUpperCase()+est.slice(1)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderHistorial(){
+  const hoy=new Date(),list=[];
+  for(let i=11;i>=0;i--){
+    let m=hoy.getMonth()-i,a=hoy.getFullYear();
+    if(m<0){m+=12;a--;}
+    const pagos=DB.meses[`${a}_${m}`]||[];
+    const total=pagos.filter(p=>p.estado==='pagado').reduce((s,p)=>{const sv=getServicio(p.id);return s+(p.montoReal||sv?.monto||0);},0);
+    const pagados=pagos.filter(p=>p.estado==='pagado').length;
+    list.push({mes:MESES[m].slice(0,3),anio:a,total,pagados});
+  }
+  const max=Math.max(...list.map(x=>x.total),1);
+  document.getElementById('histList').innerHTML=list.map(x=>`
+    <div class="hist-row">
+      <span class="hist-mes">${x.mes} ${x.anio}</span>
+      <div class="hist-bar-wrap"><div class="hist-bar" style="width:${Math.round(x.total/max*100)}%"></div></div>
+      <span class="hist-pagados">${x.pagados>0?x.pagados+' pag.':''}</span>
+      <span class="hist-monto">${x.total?formatPeso(x.total):'—'}</span>
+    </div>`).join('');
+}
+
+function cambiarMes(d){
+  mesActual+=d;
+  if(mesActual>11){mesActual=0;anioActual++;}
+  if(mesActual<0){mesActual=11;anioActual--;}
+  render();
+}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function backdropClick(id,e){if(e.target===document.getElementById(id))closeModal(id);}
+
+function populateCatSelect(selId,selVal){
+  document.getElementById(selId).innerHTML=DB.categorias.map(c=>`<option value="${c.id}"${c.id===selVal?' selected':''}>${c.nombre}</option>`).join('');
+}
+
+function setupEstadoToggle(){
+  document.getElementById('fEstado').onchange=function(){
+    document.getElementById('fPagoDetalles').style.display=this.value==='pagado'?'block':'none';
+    if(this.value==='pagado'&&!document.getElementById('fFechaPago').value){
+      document.getElementById('fFechaPago').value=new Date().toISOString().split('T')[0];
+      document.getElementById('fMontoReal').value=document.getElementById('fMonto').value;
+    }
+  };
+}
+
+function openAgregar(){
+  if(!requireLicense()) return;
+  editServIdx=null;
+  document.getElementById('mServTitle').textContent='Nuevo servicio';
+  document.getElementById('fNombre').value='';
+  populateCatSelect('fCat','luz');
+  document.getElementById('fFreq').value='mensual';
+  document.getElementById('fDia').value='';
+  document.getElementById('fMonto').value='';
+  document.getElementById('fMedio').value='Transferencia';
+  document.getElementById('fEstado').value='pendiente';
+  document.getElementById('fPagoDetalles').style.display='none';
+  document.getElementById('fFechaPago').value='';
+  document.getElementById('fMontoReal').value='';
+  document.getElementById('fNotas').value='';
+  setupEstadoToggle();
+  document.getElementById('btnServRow').innerHTML=`<button class="btn" onclick="closeModal('oServicio')">Cancelar</button><button class="btn primary" onclick="guardarServicio()"><i class="ti ti-device-floppy"></i> Guardar</button>`;
+  openModal('oServicio');
+  setTimeout(()=>document.getElementById('fNombre').focus(),100);
+}
+
+function openEditar(idx){
+  if(!requireLicense()) return;
+  const pagos=getMesPagos(mesActual,anioActual);
+  const p=pagos[idx];const s=getServicio(p.id);if(!s)return;
+  editServIdx=idx;
+  document.getElementById('mServTitle').textContent=s.nombre;
+  document.getElementById('fNombre').value=s.nombre;
+  populateCatSelect('fCat',s.cat);
+  document.getElementById('fFreq').value=s.freq||'mensual';
+  document.getElementById('fDia').value=s.dia||'';
+  document.getElementById('fMonto').value=s.monto||'';
+  document.getElementById('fMedio').value=s.medio||'Transferencia';
+  document.getElementById('fEstado').value=p.estado==='pagado'?'pagado':'pendiente';
+  document.getElementById('fPagoDetalles').style.display=p.estado==='pagado'?'block':'none';
+  document.getElementById('fFechaPago').value=p.fechaPago||'';
+  document.getElementById('fMontoReal').value=p.montoReal||'';
+  document.getElementById('fNotas').value=p.notes||p.notas||'';
+  setupEstadoToggle();
+  document.getElementById('btnServRow').innerHTML=`
+    <button class="btn danger" onclick="eliminarServicio()" style="flex:0 0 auto;padding:8px 12px"><i class="ti ti-trash"></i></button>
+    ${p.estado==='pagado'
+      ?`<button class="btn" onclick="desmarcarPago()"><i class="ti ti-refresh"></i> Desmarcar</button>`
+      :`<button class="btn success" onclick="marcarPagado()"><i class="ti ti-check"></i> Marcar pagado</button>`}
+    <button class="btn primary" onclick="guardarServicio()"><i class="ti ti-device-floppy"></i> Guardar</button>`;
+  openModal('oServicio');
+}
+
+function marcarPagado(){
+  document.getElementById('fEstado').value='pagado';
+  document.getElementById('fPagoDetalles').style.display='block';
+  if(!document.getElementById('fFechaPago').value) document.getElementById('fFechaPago').value=new Date().toISOString().split('T')[0];
+  if(!document.getElementById('fMontoReal').value) document.getElementById('fMontoReal').value=document.getElementById('fMonto').value;
+}
+function desmarcarPago(){
+  const pagos=getMesPagos(mesActual,anioActual);
+  pagos[editServIdx].estado='pendiente';pagos[editServIdx].fechaPago=null;pagos[editServIdx].montoReal=null;
+  saveMesPagos(mesActual,anioActual,pagos);closeModal('oServicio');render();
+}
+function guardarServicio(){
+  const nombre=document.getElementById('fNombre').value.trim();
+  if(!nombre){document.getElementById('fNombre').focus();return;}
+  const cat=document.getElementById('fCat').value;
+  const freq=document.getElementById('fFreq').value;
+  const dia=parseInt(document.getElementById('fDia').value)||0;
+  const monto=parseFloat(document.getElementById('fMonto').value)||0;
+  const medio=document.getElementById('fMedio').value;
+  const estado=document.getElementById('fEstado').value;
+  const fechaPago=document.getElementById('fFechaPago').value||null;
+  const montoReal=parseFloat(document.getElementById('fMontoReal').value)||null;
+  const notas=document.getElementById('fNotas').value||'';
+  if(editServIdx===null){
+    const newId=Date.now();
+    DB.servicios.push({id:newId,nombre,cat,freq,dia,monto,medio});
+    const pagos=getMesPagos(mesActual,anioActual);
+    pagos.push({id:newId,estado,fechaPago,montoReal,notas});
+    saveMesPagos(mesActual,anioActual,pagos);
+  } else {
+    const pagos=getMesPagos(mesActual,anioActual);
+    const sid=pagos[editServIdx].id;
+    const si=DB.servicios.findIndex(s=>s.id===sid);
+    if(si>=0) DB.servicios[si]={...DB.servicios[si],nombre,cat,freq,dia,monto,medio};
+    pagos[editServIdx]={...pagos[editServIdx],estado,fechaPago,montoReal,notas};
+    saveMesPagos(mesActual,anioActual,pagos);
+  }
+  saveDB();closeModal('oServicio');render();
+}
+function eliminarServicio(){
+  if(!confirm('¿Eliminar este servicio del mes?'))return;
+  const pagos=getMesPagos(mesActual,anioActual);
+  pagos.splice(editServIdx,1);saveMesPagos(mesActual,anioActual,pagos);closeModal('oServicio');render();
+}
+
+function openProgramar(){
+  if(!requireLicense()) return;
+  document.getElementById('vServicio').innerHTML=DB.servicios.map(s=>`<option value="${s.id}">${s.nombre}</option>`).join('');
+  const hoy=new Date();
+  document.getElementById('vMes').value=((hoy.getMonth()+1)%12);
+  document.getElementById('vAnio').value=hoy.getMonth()===11?hoy.getFullYear()+1:hoy.getFullYear();
+  document.getElementById('vDia').value='';
+  document.getElementById('vMonto').value='';
+  renderVencimientosLista();
+  openModal('oVencimientos');
+}
+function renderVencimientosLista(){
+  const items=DB.vencimientos||[];
+  document.getElementById('vencList').innerHTML=items.length?items.map((v,i)=>{
+    const s=getServicio(v.servId);
+    return `<div class="venc-item">
+      <i class="ti ti-calendar-event" style="font-size:13px;color:var(--color-text-secondary)"></i>
+      <span class="vi-label">${s?.nombre||'?'}</span>
+      <span class="vi-date">${MESES[v.mes].slice(0,3)} ${v.anio} · día ${v.dia} · ${formatPeso(v.monto)}</span>
+      <button class="vi-remove" onclick="quitarVencimiento(${i})" aria-label="Eliminar"><i class="ti ti-x"></i></button>
+    </div>`;
+  }).join(''):'<p style="font-size:12px;color:var(--color-text-secondary);padding:4px 0">Sin vencimientos programados.</p>';
+}
+function agregarVencimiento(){
+  const servId=parseInt(document.getElementById('vServicio').value);
+  const mes=parseInt(document.getElementById('vMes').value);
+  const anio=parseInt(document.getElementById('vAnio').value);
+  const dia=parseInt(document.getElementById('vDia').value)||15;
+  const monto=parseFloat(document.getElementById('vMonto').value)||0;
+  if(!DB.vencimientos) DB.vencimientos=[];
+  DB.vencimientos.push({servId,mes,anio,dia,monto});
+  const k=`${anio}_${mes}`;
+  if(!DB.meses[k]) DB.meses[k]=DB.servicios.map(s=>({id:s.id,estado:'pendiente',fechaPago:null,montoReal:null,notas:''}));
+  if(!DB.meses[k].find(p=>p.id===servId)) DB.meses[k].push({id:servId,estado:'pendiente',fechaPago:null,montoReal:null,notas:''});
+  const si=DB.servicios.findIndex(s=>s.id===servId);
+  if(si>=0){DB.servicios[si].dia=dia;if(monto)DB.servicios[si].monto=monto;}
+  saveDB();renderVencimientosLista();
+}
+function quitarVencimiento(i){DB.vencimientos.splice(i,1);saveDB();renderVencimientosLista();}
+
+function openCats(){
+  if(!requireLicense()) return;
+  editCatIdx=null;selIcon='ti-bolt';selColor='#faeeda';
+  document.getElementById('cNombre').value='';
+  document.getElementById('catFormTitle').textContent='Nueva categoría';
+  document.getElementById('btnGuardarCat').textContent='Agregar categoría';
+  renderCatList();renderIconGrid();renderColorGrid();
+  openModal('oCats');
+}
+function renderCatList(){
+  document.getElementById('catListEl').innerHTML=DB.categorias.map((c,i)=>`
+    <div class="cat-list-item">
+      <div class="cat-icon-sm" style="background:${c.color}"><i class="ti ${c.icon}" style="font-size:13px;color:#${darken(c.color)}"></i></div>
+      <span class="cat-name">${c.nombre}</span>
+      <button class="icon-btn" style="width:28px;height:28px;font-size:13px" onclick="editCat(${i})" aria-label="Editar"><i class="ti ti-edit"></i></button>
+      ${i>0?`<button class="icon-btn" style="width:28px;height:28px;font-size:13px" onclick="deleteCat(${i})" aria-label="Eliminar"><i class="ti ti-trash"></i></button>`:'<div style="width:28px"></div>'}
+    </div>`).join('');
+}
+function renderIconGrid(){
+  document.getElementById('iconGrid').innerHTML=ICONS_CAT.map(ic=>`<div class="icon-opt${ic===selIcon?' sel':''}" onclick="selIconFn('${ic}')"><i class="ti ${ic}"></i></div>`).join('');
+}
+function renderColorGrid(){
+  document.getElementById('colorGrid').innerHTML=COLORS.map(cl=>`<div class="color-opt${cl.bg===selColor?' sel':''}" style="background:${cl.bg}" onclick="selColorFn('${cl.bg}')"></div>`).join('');
+}
+function selIconFn(ic){selIcon=ic;renderIconGrid();}
+function selColorFn(cl){selColor=cl;renderColorGrid();}
+function editCat(i){
+  editCatIdx=i;const c=DB.categorias[i];
+  document.getElementById('cNombre').value=c.nombre;
+  selIcon=c.icon;selColor=c.color;
+  document.getElementById('catFormTitle').textContent='Editar categoría';
+  document.getElementById('btnGuardarCat').textContent='Actualizar';
+  renderIconGrid();renderColorGrid();
+}
+function cancelEditCat(){editCatIdx=null;document.getElementById('cNombre').value='';document.getElementById('catFormTitle').textContent='Nueva categoría';document.getElementById('btnGuardarCat').textContent='Agregar categoría';selIcon='ti-bolt';selColor='#faeeda';renderIconGrid();renderColorGrid();}
+function guardarCat(){
+  const nombre=document.getElementById('cNombre').value.trim();if(!nombre)return;
+  if(editCatIdx===null) DB.categorias.push({id:'cat_'+Date.now(),nombre,icon:selIcon,color:selColor});
+  else DB.categorias[editCatIdx]={...DB.categorias[editCatIdx],nombre,icon:selIcon,color:selColor};
+  editCatIdx=null;saveDB();cancelEditCat();renderCatList();render();
+}
+function deleteCat(i){
+  const cat=DB.categorias[i];
+  if(DB.servicios.some(s=>s.cat===cat.id)&&!confirm(`La categoría "${cat.nombre}" está en uso. ¿Eliminar?`))return;
+  DB.categorias.splice(i,1);saveDB();renderCatList();render();
+}
+
+function openExport(){switchTab('exportar');openModal('oExport');}
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',i===(t==='exportar'?0:1)));
+  document.getElementById('tabExportar').style.display=t==='exportar'?'block':'none';
+  document.getElementById('tabImportar').style.display=t==='importar'?'block':'none';
+  if(t==='exportar') document.getElementById('exportText').textContent=JSON.stringify(DB,null,2);
+}
+function copiarJSON(){
+  navigator.clipboard.writeText(JSON.stringify(DB,null,2)).then(()=>{
+    const btn=document.querySelector('#oExport .btn.primary');const orig=btn.innerHTML;
+    btn.innerHTML='<i class="ti ti-check"></i> Copiado';setTimeout(()=>btn.innerHTML=orig,2000);
+  }).catch(()=>alert('Seleccioná y copiá el texto del área superior'));
+}
+function importarJSON(){
+  try{
+    const data=JSON.parse(document.getElementById('importText').value);
+    if(!data.version||!data.servicios)throw new Error('Formato inválido');
+    if(!confirm('Esto reemplazará todos tus datos. ¿Continuar?'))return;
+    DB=data;saveDB();closeModal('oExport');render();
+  }catch(e){alert('JSON inválido: '+e.message);}
+}
+
+function openFiltro(){
+  document.getElementById('filtroEstados').innerHTML=[['pendiente','Pendiente'],['vencido','Vencido'],['pagado','Pagado']].map(([v,l])=>`
+    <div class="check-row"><input type="checkbox" id="fe_${v}" value="${v}"${filtroEstados.includes(v)?' checked':''}><label for="fe_${v}">${l}</label></div>`).join('');
+  document.getElementById('filtroCats').innerHTML=DB.categorias.map(c=>`
+    <div class="check-row"><input type="checkbox" id="fc_${c.id}" value="${c.id}"${!filtroCats||filtroCats.includes(c.id)?' checked':''}><label for="fc_${c.id}">${c.nombre}</label></div>`).join('');
+  openModal('oFiltro');
+}
+function aplicarFiltros(){
+  filtroEstados=Array.from(document.querySelectorAll('#filtroEstados input:checked')).map(el=>el.value);
+  const cs=Array.from(document.querySelectorAll('#filtroCats input:checked')).map(el=>el.value);
+  filtroCats=cs.length===DB.categorias.length?null:cs;
+  closeModal('oFiltro');render();
+}
+function resetFiltros(){filtroEstados=['pendiente','vencido','pagado'];filtroCats=null;closeModal('oFiltro');render();}
+
+loadLicenseState();
+renderLicenseUI();
+render();
+</script>
