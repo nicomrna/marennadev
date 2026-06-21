@@ -5,17 +5,17 @@
 const LICENCIAS_JSON = {
   "LIC-LAUNCH-2026-PRO": {
     "active": true,
-    "expiresAt": "2027-12-31T23:59:59.000Z", 
+    "expiresAt": "2026-12-31T23:59:59.000Z", 
     "message": "Licencia de Lanzamiento Promocional Activa"
   },
   "LIC-TEST-9999-OK": {
     "active": true,
-    "expiresAt": "2030-01-01T00:00:00.000Z",
+    "expiresAt": "2026-01-01T00:00:00.000Z",
     "message": "Licencia de pruebas válida"
   },
   "LIC-EXPIRADA-1234": {
     "active": true, 
-    "expiresAt": "2025-01-01T00:00:00.000Z", 
+    "expiresAt": "2026-01-01T00:00:00.000Z", 
     "message": "Esta licencia ya ha caducado"
   }
 };
