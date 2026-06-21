@@ -618,7 +618,7 @@
       navigator.vibrate?.(20);
 
       try {
-        const response = await fetch('./mareplay.html', { cache: 'no-store' });
+        const response = await fetch('./marepay.html', { cache: 'no-store' });
         if (!response.ok) throw new Error('download-not-ready');
 
         const text = await response.text();
@@ -627,7 +627,7 @@
 
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'mareplay.html';
+        a.download = 'marepay.html';
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -644,8 +644,8 @@
         });
       } catch (error) {
         const a = document.createElement('a');
-        a.href = './mareplay.html';
-        a.download = 'mareplay.html';
+        a.href = './marepay.html';
+        a.download = 'marepay.html';
         document.body.appendChild(a);
         a.click();
         a.remove();
