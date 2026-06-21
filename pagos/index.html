@@ -1,359 +1,656 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MarePay — Tus números en tu propia casa</title>
+  <meta name="description" content="MarePay es un sistema privado para organizar gastos, vencimientos y pagos desde tu propia computadora, sin suscripciones ni nubes ajenas." />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
   <style>
-    :root {
-      --bg: #f9f9f6;
-      --card: #ffffff;
-      --text: #1c1c1a;
-      --muted: #6e6e6a;
-      --border: rgba(28, 28, 26, 0.08);
-      --primary: #1c1c1a;
-      --primary-hover: #3a3a35;
-      --accent: #b27b12;
-      --accent-light: #fdf6e2;
-      --shadow: 0 20px 40px -15px rgba(0,0,0,0.03);
+    :root{
+      --bg:#f7f4ee;
+      --surface:#ffffff;
+      --surface-2:#fcfbf7;
+      --text:#1d1d1b;
+      --muted:#6f6a62;
+      --border:rgba(29,29,27,.08);
+      --primary:#191816;
+      --primary-2:#37332d;
+      --accent:#b07a16;
+      --accent-soft:#f8efda;
+      --good:#1f7a48;
+      --shadow:0 22px 60px -24px rgba(18,16,12,.18);
+      --shadow-soft:0 14px 36px -24px rgba(18,16,12,.12);
+      --radius:24px;
+      --radius-sm:16px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(176,122,22,.08), transparent 28%),
+        radial-gradient(circle at top right, rgba(25,24,22,.05), transparent 24%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
 
-    .wrapper {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 5rem 1.25rem;
+    a{color:inherit}
+    .wrapper{
+      width:min(100%, 720px);
+      margin:0 auto;
+      padding:clamp(20px, 4vw, 34px);
+      padding-top:clamp(28px, 6vw, 56px);
+      padding-bottom:clamp(34px, 6vw, 60px);
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 4rem;
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
     }
 
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--primary);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,255,255,.62);
+      backdrop-filter:blur(10px);
+      box-shadow:0 8px 24px -18px rgba(0,0,0,.18);
+      font-size:12px;
+      letter-spacing:.45px;
+      text-transform:uppercase;
+      font-weight:700;
     }
 
-    h1 {
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: -0.75px;
-      line-height: 1.2;
-      margin-bottom: 1rem;
+    .brand i{font-size:18px;color:var(--accent)}
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:var(--accent-soft);
+      color:var(--accent);
+      border:1px solid rgba(176,122,22,.12);
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
     }
 
-    .lead {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 520px;
-      margin: 0 auto;
+    .hero{
+      padding:clamp(10px, 2vw, 16px) 0 8px;
+      margin-bottom:28px;
     }
 
-    /* Crónica estilo Casciari */
-    .cronica {
-      font-size: 15px;
-      color: var(--text);
-      margin-bottom: 3.5rem;
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
     }
 
-    .cronica p {
-      margin-bottom: 1.25rem;
+    .eyebrow::before{
+      content:"";
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:var(--accent);
+      box-shadow:0 0 0 5px rgba(176,122,22,.12);
     }
 
-    .cronica strong {
-      color: var(--primary);
+    h1{
+      font-size:clamp(33px, 6vw, 56px);
+      line-height:1.03;
+      letter-spacing:-1.4px;
+      margin-bottom:16px;
+      max-width:12ch;
     }
 
-    /* Sección de conversión */
-    .cta-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-      margin-bottom: 4rem;
-      box-shadow: var(--shadow);
+    .lead{
+      font-size:clamp(16px, 2.2vw, 18px);
+      color:var(--muted);
+      max-width:58ch;
+      margin-bottom:22px;
     }
 
-    .tag-price {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      background: var(--accent-light);
-      padding: 5px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-bottom: 1rem;
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+      align-items:start;
+      margin-top:18px;
     }
 
-    .cta-box h2 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.3px;
+    .summary-card,
+    .cta-box,
+    .section{
+      background:rgba(255,255,255,.86);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-soft);
+      backdrop-filter:blur(8px);
     }
 
-    .download-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      max-width: 340px;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      padding: 16px 28px;
-      font-size: 15px;
-      font-weight: 500;
-      border-radius: 12px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    .summary-card{
+      padding:20px;
     }
 
-    .download-btn:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
+    .summary-card p{
+      color:var(--text);
+      margin-bottom:14px;
+      font-size:15px;
     }
 
-    .download-btn:active {
-      transform: translateY(1px);
+    .summary-card p:last-child{margin-bottom:0}
+    .summary-card strong{color:var(--primary)}
+
+    .trust{
+      display:grid;
+      gap:10px;
+      margin-top:18px;
     }
 
-    .download-btn i { font-size: 18px; }
-
-    .meta-note {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 1.25rem;
+    .trust-item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px 14px;
+      border-radius:14px;
+      background:var(--surface-2);
+      border:1px solid rgba(29,29,27,.05);
+      color:var(--muted);
+      font-size:13px;
     }
 
-    /* Características */
-    .features {
-      margin-bottom: 4rem;
+    .trust-item i{
+      color:var(--good);
+      font-size:17px;
+      margin-top:1px;
+      flex:0 0 auto;
     }
 
-    .features h3 {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
+    .cta-box{
+      padding:22px;
+      position:sticky;
+      top:18px;
     }
 
-    .feature-row {
-      display: flex;
-      gap: 16px;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid rgba(28, 28, 26, 0.04);
+    .price-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--accent);
+      background:var(--accent-soft);
+      border:1px solid rgba(176,122,22,.12);
+      padding:7px 12px;
+      border-radius:999px;
+      margin-bottom:14px;
     }
 
-    .feature-row:last-child { border-bottom: none; }
-
-    .feat-icon {
-      color: var(--primary);
-      font-size: 20px;
-      padding-top: 2px;
+    .cta-box h2{
+      font-size:22px;
+      line-height:1.15;
+      letter-spacing:-.4px;
+      margin-bottom:12px;
     }
 
-    .feat-text h4 {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
+    .cta-box .note{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:18px;
     }
 
-    .feat-text p {
-      font-size: 13.5px;
-      color: var(--muted);
+    .download-btn{
+      appearance:none;
+      border:none;
+      width:100%;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:56px;
+      padding:16px 18px;
+      background:linear-gradient(180deg, var(--primary), #11100f);
+      color:#fff;
+      border-radius:16px;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease, opacity .18s ease;
+      box-shadow:0 14px 28px -16px rgba(17,16,15,.55);
     }
 
-    footer {
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--muted);
-      flex-wrap: wrap;
-      gap: 1rem;
+    .download-btn:hover{transform:translateY(-1px);background:linear-gradient(180deg, var(--primary-2), var(--primary))}
+    .download-btn:active{transform:translateY(1px)}
+    .download-btn[aria-busy="true"]{opacity:.92}
+    .download-btn i{font-size:18px}
+
+    .mini-copy{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
     }
 
-    footer a { color: var(--text); text-decoration: none; font-weight: 500; }
-    footer a:hover { text-decoration: underline; }
+    .mini-copy span{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      font-size:12px;
+      color:var(--muted);
+      padding:8px 10px;
+      border:1px solid rgba(29,29,27,.06);
+      border-radius:999px;
+      background:rgba(255,255,255,.55);
+    }
 
-    @media (max-width: 480px) {
-      .wrapper { padding: 3rem 1rem; }
-      h1 { font-size: 26px; }
-      .cta-box { padding: 2rem 1rem; }
+    .section{
+      padding:22px;
+      margin-top:18px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:16px;
+      padding-bottom:12px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .section-title h3{
+      font-size:12px;
+      letter-spacing:.9px;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .section-title .sidenote{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .feature-list{
+      display:grid;
+      gap:14px;
+    }
+
+    .feature-row{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:14px;
+      align-items:start;
+      padding:14px 0;
+      border-bottom:1px solid rgba(29,29,27,.05);
+    }
+
+    .feature-row:last-child{border-bottom:none;padding-bottom:2px}
+    .feat-icon{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:var(--accent-soft);
+      border:1px solid rgba(176,122,22,.12);
+      color:var(--accent);
+      font-size:20px;
+      flex:0 0 auto;
+    }
+
+    .feat-text h4{
+      font-size:15px;
+      margin-bottom:4px;
+      letter-spacing:-.2px;
+    }
+
+    .feat-text p{
+      font-size:13.8px;
+      color:var(--muted);
+    }
+
+    .faq{
+      display:grid;
+      gap:12px;
+    }
+
+    .faq-item{
+      padding:14px 0 0;
+      border-top:1px solid rgba(29,29,27,.05);
+    }
+
+    .faq-item:first-child{border-top:none;padding-top:0}
+    .faq-item h4{
+      font-size:14px;
+      margin-bottom:5px;
+      letter-spacing:-.1px;
+    }
+
+    .faq-item p{
+      font-size:13.8px;
+      color:var(--muted);
+    }
+
+    footer{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:22px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    footer a{
+      font-weight:700;
+      color:var(--text);
+      text-decoration:none;
+    }
+
+    footer a:hover{text-decoration:underline}
+
+    .mobile-cta{
+      display:none;
+    }
+
+    @media (max-width: 720px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+      .cta-box{
+        position:relative;
+        top:auto;
+      }
+      h1{
+        max-width:14ch;
+      }
+    }
+
+    @media (max-width: 540px){
+      .wrapper{
+        padding:16px;
+        padding-top:20px;
+        padding-bottom:92px;
+      }
+
+      .topbar{
+        margin-bottom:14px;
+      }
+
+      .brand{
+        padding:9px 12px;
+      }
+
+      .chip{
+        display:none;
+      }
+
+      .summary-card,
+      .cta-box,
+      .section{
+        padding:18px;
+        border-radius:22px;
+      }
+
+      .cta-box h2{
+        font-size:20px;
+      }
+
+      .download-btn{
+        min-height:54px;
+        font-size:15px;
+      }
+
+      .mobile-cta{
+        display:flex;
+        position:fixed;
+        left:12px;
+        right:12px;
+        bottom:12px;
+        z-index:20;
+        padding:10px;
+        background:rgba(255,255,255,.9);
+        backdrop-filter:blur(12px);
+        border:1px solid var(--border);
+        border-radius:20px;
+        box-shadow:0 18px 42px -24px rgba(0,0,0,.28);
+      }
+
+      .mobile-cta .download-btn{
+        width:100%;
+      }
     }
   </style>
 </head>
 <body>
-
   <div class="wrapper">
-    <header>
-      <div class="brand-badge">
-        <i class="ti ti-file-invoice"></i> MarePay
+    <div class="topbar">
+      <div class="brand">
+        <i class="ti ti-file-invoice"></i>
+        <span>MarePay</span>
       </div>
-      <h1>El arte de saber a dónde se te va la plata sin pedirle permiso a nadie</h1>
-      <p class="lead">Un sistema de control de gastos privado, sin empresas raras metiendo las narices y que manejás vos desde tu escritorio.</p>
-    </header>
+      <div class="chip"><i class="ti ti-shield-check"></i> Privado · Sin suscripción</div>
+    </div>
 
-    <main>
-      <section class="cronica">
-        <p>A mí me da una desconfianza bárbara la gente que anota su vida en internet. Esos que se bajan una aplicación de moda para contarle a un servidor que vaya a saber uno dónde queda, cuánto pagan de luz, cuándo vence la patente del auto o a cuántos meses financiaron el lavarropas. Le regalan sus números al mundo como si del otro lado hubiera un tío de confianza cuidándoles el bolsillo, y no un montón de tipos desconocidos viendo qué publicidad encajarles según sus deudas.</p>
-        
-        <p>Mi abuelo Chichín llevaba las cuentas con un lápiz de mina gorda, de esos de carpintero, en un cuaderno de almacenero con espiral. Había una dignidad hermosa en ese desorden familiar. Nadie venía a mirar desde afuera. Nadie usaba sus datos para venderle nada.</p>
-        
-        <p><strong>MarePay es eso, pero en la computadora.</strong> No es una plataforma moderna con suscripciones mensuales que te muerden la tarjeta todos los meses ni alertas pesadas que te rompen la paciencia un domingo a la tarde. Te bajás el archivo una sola vez, lo abrís en tu PC y funciona ahí adentro, en tu casa, sin salir a internet. Cuesta sesenta dólares. Ni más ni menos que lo que vale la tranquilidad de que tu desorden financiero sea tuyo, y de nadie más.</p>
-      </section>
+    <section class="hero">
+      <div class="eyebrow">Tus números, en tu casa</div>
+      <h1>Las cuentas del hogar deberían quedarse en el hogar.</h1>
+      <p class="lead">
+        Un archivo simple, elegante y privado para anotar gastos, vencimientos y pagos sin depender de aplicaciones que te cobran por olvidar lo obvio.
+      </p>
 
-      <!-- CAJA DE CONVERSIÓN -->
-      <section class="cta-box">
-        <span class="tag-price">Licencia Comercial — 60 USD</span>
-        <h2>Descargá la aplicación e ingresá tu clave</h2>
-        
-        <button id="btnDownload" class="download-btn">
-          <i class="ti ti-download"></i>
-          Descargar MarePay (.html)
-        </button>
+      <div class="hero-grid">
+        <div class="summary-card">
+          <p>
+            Hay una costumbre moderna que me cae mal: regalarle la vida financiera a una app, como si del otro lado hubiera un señor serio tomando nota con cariño. Después vienen las alertas, los cobros mensuales y esa sensación de que tus números viven en una oficina ajena.
+          </p>
+          <p>
+            <strong>MarePay</strong> nace en la vereda opuesta. Lo descargás una sola vez, lo abrís en tu computadora y queda ahí, en tu casa, con tu orden, tus reglas y tus tiempos. Sin nubes raras. Sin cuentas mensuales. Sin nadie husmeando.
+          </p>
+          <p>
+            Es, en esencia, un cuaderno prolijo que aprendió a vivir dentro de una pantalla.
+          </p>
 
-        <p class="meta-note">
-          Se descarga un archivo único y liviano. Lo abrís en tu PC, ponés tu licencia y empezás a ordenar tus cuentas hoy mismo.
-        </p>
-      </section>
+          <div class="trust" aria-label="Beneficios principales">
+            <div class="trust-item">
+              <i class="ti ti-check"></i>
+              <div>Pago único de <strong>60 USD</strong>. Nada de planes que vuelven a cobrarte por seguir usando lo que ya compraste.</div>
+            </div>
+            <div class="trust-item">
+              <i class="ti ti-check"></i>
+              <div>Funciona sin internet: abrís el archivo en tu PC y empezás a organizarte.</div>
+            </div>
+            <div class="trust-item">
+              <i class="ti ti-check"></i>
+              <div>Tus datos quedan en tu computadora, no en servidores de terceros.</div>
+            </div>
+          </div>
+        </div>
 
-      <section class="features">
+        <aside class="cta-box" id="download">
+          <span class="price-tag"><i class="ti ti-license"></i> Licencia comercial · 60 USD</span>
+          <h2>Descargá MarePay y empezá a ordenar hoy.</h2>
+          <p class="note">
+            Un archivo liviano, pensado para que lo abras rápido, entiendas rápido y uses rápido. Sin vueltas, sin esperas y sin mensajes incómodos.
+          </p>
+
+          <button id="btnDownload" class="download-btn" type="button">
+            <i class="ti ti-download"></i>
+            Descargar MarePay (.html)
+          </button>
+
+          <div class="mini-copy" aria-label="Detalles de uso">
+            <span><i class="ti ti-bolt"></i> Instalación cero</span>
+            <span><i class="ti ti-device-desktop"></i> Ideal para escritorio</span>
+            <span><i class="ti ti-folder-down"></i> Respaldo simple</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
         <h3>Qué estás comprando exactamente</h3>
-        
+        <div class="sidenote">Diseñado para uso diario</div>
+      </div>
+
+      <div class="feature-list">
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-lock-square"></i></div>
           <div class="feat-text">
-            <h4>Privacidad real (de la vieja escuela)</h4>
-            <p>MarePay guarda todo en el disco de tu propia computadora usando el almacenamiento de tu navegador. Tus gastos, deudas y vencimientos nunca viajan por internet, no tocan nubes externas ni quedan flotando por ahí.</p>
+            <h4>Privacidad de la vieja escuela</h4>
+            <p>
+              Tus gastos, vencimientos y deudas quedan guardados localmente en tu navegador. No viajan, no se suben y no pasan por manos ajenas.
+            </p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-chart-bar"></i></div>
           <div class="feat-text">
-            <h4>Historial de un vistazo</h4>
-            <p>Gráficos limpios que te muestran la radiografía de todo tu año. Para que entiendas de manera gráfica y sin tecnicismos raros en qué meses se te fue la mano y cuándo pudiste enderezar el barco.</p>
+            <h4>Historial claro, sin tecnicismos</h4>
+            <p>
+              Gráficos y resúmenes para ver de un vistazo en qué mes aflojaste, cuándo te acomodaste y dónde se fue la plata con una rapidez indecente.
+            </p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-calendar-plus"></i></div>
           <div class="feat-text">
-            <h4>Vencimientos programados</h4>
-            <p>Dejá asentados los gastos fijos, los servicios bimestrales o ese impuesto anual colgado. El sistema se acomoda solo y te avisa qué tenés pendiente apenas el almanaque cambia de hoja.</p>
+            <h4>Vencimientos que no se olvidan</h4>
+            <p>
+              Cargás servicios, cuotas, alquiler, expensas y pagos fijos. MarePay te ayuda a tener todo ordenado para que el mes no te agarre distraído.
+            </p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-palette"></i></div>
           <div class="feat-text">
-            <h4>Tus categorías, tus reglas</h4>
-            <p>Organizá tus gastos con íconos claros y colores que no te queman los ojos. Una pantalla ordenada por prioridades básicas: lo que ya venció, lo que está por vencer y lo que ya te sacaste de encima.</p>
+            <h4>Una interfaz amable de verdad</h4>
+            <p>
+              Colores suaves, jerarquías claras y una lectura que funciona bien en escritorio y en pantallas chicas, sin pelearse con el dedo ni con la vista.
+            </p>
           </div>
         </div>
 
         <div class="feature-row">
           <div class="feat-icon"><i class="ti ti-copyleft"></i></div>
           <div class="feat-text">
-            <h4>Un respaldo en un segundo</h4>
-            <p>Hacés un clic y te bajás un archivo con todas tus cuentas copiadas. Si cambiás de computadora o formateás, te llevás el archivo en un pendrive, lo cargás y seguís como si nada.</p>
+            <h4>Respaldo fácil y rápido</h4>
+            <p>
+              Bajás una copia, la guardás en un pendrive o donde quieras, y seguís. Si cambiás de computadora, no empezás de cero.
+            </p>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h3>Preguntas que suelen aparecer</h3>
+        <div class="sidenote">Sin letra chica</div>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h4>¿Necesita internet para funcionar?</h4>
+          <p>No. Una vez descargado, el archivo vive en tu computadora y trabaja ahí, sin depender de conexiones, cuentas ni servidores.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Mis datos se comparten con alguien?</h4>
+          <p>No. La idea es justamente la contraria: que tus números se queden en tu máquina y no anden circulando por el mundo.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Qué pasa si cambio de computadora?</h4>
+          <p>Hacés un respaldo, lo llevás con vos y seguís. Como un cuaderno de toda la vida, pero sin hojas arrancadas ni tinta corrida.</p>
+        </div>
+      </div>
+    </section>
 
     <footer>
       <div>© <span id="year"></span> Marenna Dev.</div>
-      <div>
-        <a href="https://marennadev.vercel.app/" target="_blank" rel="noopener">marennadev.vercel.app</a>
-      </div>
+      <div><a href="https://marennadev.vercel.app/" target="_blank" rel="noopener noreferrer">marennadev.vercel.app</a></div>
     </footer>
+  </div>
+
+  <div class="mobile-cta" aria-hidden="true">
+    <button class="download-btn" id="btnDownloadMobile" type="button">
+      <i class="ti ti-download"></i>
+      Descargar MarePay
+    </button>
   </div>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // LÓGICA BLOB COMPATIBLE E INMUNE A ERRORES DE SITIO
-    document.getElementById('btnDownload').addEventListener('click', async (e) => {
+    function buildDownloadSource() {
+      const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      return new Blob([html], { type: 'text/html;charset=utf-8' });
+    }
+
+    function triggerDownload(filename) {
+      const blob = buildDownloadSource();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+
+    async function handleDownload(e) {
       e.preventDefault();
       const btn = e.currentTarget;
-      const originalHTML = btn.innerHTML;
-      
+      const original = btn.innerHTML;
+
+      btn.setAttribute('aria-busy', 'true');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="ti ti-loader-2 ti-spin"></i> Preparando copia...';
+      navigator.vibrate?.(20);
+
       try {
-        btn.innerHTML = '<i class="ti ti-loader-2 ti-spin"></i> Preparando archivo...';
-        btn.style.pointerEvents = 'none';
-
-        // Petición al archivo local en la misma carpeta de Vercel
-        const response = await fetch('marepay.html');
-        if (!response.ok) throw new Error('No se encontró el archivo base.');
-        
-        const textData = await response.text();
-        
-        // Empaquetado dinámico en memoria del cliente
-        const blob = new Blob([textData], { type: 'text/html' });
-        const objectUrl = URL.createObjectURL(blob);
-        
-        const tempLink = document.createElement('a');
-        tempLink.href = objectUrl;
-        tempLink.download = 'marepay.html';
-        document.body.appendChild(tempLink);
-        tempLink.click();
-        
-        document.body.removeChild(tempLink);
-        URL.revokeObjectURL(objectUrl);
-
+        triggerDownload('marepay.html');
         btn.innerHTML = '<i class="ti ti-check"></i> Descargado';
         setTimeout(() => {
-          btn.innerHTML = originalHTML;
-          btn.style.pointerEvents = 'auto';
-        }, 3000);
-
+          btn.innerHTML = original;
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
+        }, 1800);
       } catch (error) {
         console.error(error);
-        // Fallback tradicional
-        const fallbackLink = document.createElement('a');
-        fallbackLink.href = 'marepay.html';
-        fallbackLink.download = 'marepay.html';
-        fallbackLink.click();
-        btn.innerHTML = originalHTML;
-        btn.style.pointerEvents = 'auto';
+        btn.innerHTML = original;
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
       }
-    });
+    }
+
+    document.getElementById('btnDownload').addEventListener('click', handleDownload);
+    document.getElementById('btnDownloadMobile').addEventListener('click', handleDownload);
   </script>
 </body>
 </html>
