@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/licencia/validate",
+      "destination": "/api/validate"
+    }
+  ]
+}
