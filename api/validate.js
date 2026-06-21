@@ -13,6 +13,11 @@ const LICENCIAS_JSON = {
     "expiresAt": "2026-01-01T00:00:00.000Z",
     "message": "Licencia de pruebas válida"
   },
+  "MAR-TEST-9999-OK": {
+    "active": true,
+    "expiresAt": "2026-12-31T00:00:00.000Z",
+    "message": "Licencia de pruebas válida"
+  },
   "LIC-EXPIRADA-1234": {
     "active": true, 
     "expiresAt": "2026-01-01T00:00:00.000Z", 
