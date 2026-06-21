@@ -1,5 +1,5 @@
-// Servidor de ValidaciÛn de Licencias - Marenna Dev
-// UbicaciÛn en tu Vercel: /api/validate.js
+// Servidor de Validaci√≥n de Licencias - Marenna Dev
+// Ubicaci√≥n en tu Vercel: /api/validate.js
 
 // Tu lista de licencias en formato JSON (Modificas este archivo cada vez que crees una)
 const LICENCIAS_JSON = {
@@ -11,7 +11,7 @@ const LICENCIAS_JSON = {
   "LIC-TEST-9999-OK": {
     "active": true,
     "expiresAt": "2030-01-01T00:00:00.000Z",
-    "message": "Licencia de pruebas v·lida"
+    "message": "Licencia de pruebas v√°lida"
   },
   "LIC-EXPIRADA-1234": {
     "active": true, 
@@ -21,20 +21,20 @@ const LICENCIAS_JSON = {
 };
 
 export default async function handler(req, res) {
-  // ConfiguraciÛn de cabeceras CORS para permitir que la app local de tu cliente se conecte
+  // Configuraci√≥n de cabeceras CORS para permitir que la app local de tu cliente se conecte
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
-  // Responder r·pido al preflight de CORS
+  // Responder r√°pido al preflight de CORS
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  // Capturar la peticiÛn POST que envÌa el pagos.html del cliente
+  // Capturar la petici√≥n POST que env√≠a el pagos.html del cliente
   if (req.method !== 'POST') {
-    return res.status(405).json({ active: false, message: 'MÈtodo no permitido.' });
+    return res.status(405).json({ active: false, message: 'M√©todo no permitido.' });
   }
 
   try {
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     const codigoIngresado = (code || licenseKey || "").trim().toUpperCase();
 
     if (!codigoIngresado) {
-      return res.status(400).json({ active: false, message: 'Falta especificar el cÛdigo de licencia.' });
+      return res.status(400).json({ active: false, message: 'Falta especificar el c√≥digo de licencia.' });
     }
 
     // Buscar en nuestro JSON interno
@@ -51,11 +51,11 @@ export default async function handler(req, res) {
     if (!licencia) {
       return res.status(404).json({
         active: false,
-        message: 'El cÛdigo de licencia no existe o es incorrecto.'
+        message: 'El c√≥digo de licencia no existe o es incorrecto.'
       });
     }
 
-    // Validar si est· activa en el JSON
+    // Validar si est√° activa en el JSON
     if (!licencia.active) {
       return res.status(403).json({
         active: false,
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // Validar fecha de expiraciÛn
+    // Validar fecha de expiraci√≥n
     const ahora = new Date();
     const fechaExpiracion = new Date(licencia.expiresAt);
 
@@ -75,11 +75,11 @@ export default async function handler(req, res) {
       });
     }
 
-    // Responder con Èxito si todo coincide
+    // Responder con √©xito si todo coincide
     return res.status(200).json({
       active: true,
       validUntil: licencia.expiresAt, 
-      message: licencia.message || 'Licencia validada con Èxito.'
+      message: licencia.message || 'Licencia validada con √©xito.'
     });
 
   } catch (error) {
