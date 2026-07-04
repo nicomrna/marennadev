@@ -306,7 +306,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-backg
     
     <div class="field">
       <label>Endpoint de validación</label>
-      <input id="licEndpoint" type="text" value="https://marennadev.vercel.app/licencia/validate" autocomplete="off">
+      <input id="licEndpoint" type="text" value="https://marennadev.vercel.app/api/validate.js" autocomplete="off">
     </div>
     
     <div class="license-field-note">
@@ -383,7 +383,7 @@ let DB=initDB();
 
 const LICENSE_STORAGE_KEY='pagos_mensuales_pro_license_key';
 const DEVICE_ID_KEY='pagos_mensuales_pro_device_id';
-const DEFAULT_LICENSE_ENDPOINT='https://marennadev.vercel.app/licencia/validate';
+const DEFAULT_LICENSE_ENDPOINT='https://marennadev.vercel.app/api/validate.js';
 let LICENSE_STATE={active:false,validUntil:null,message:'Sin verificar'};
 let LICENSE_MODAL_CONTEXT='view';
 
@@ -908,7 +908,30 @@ function aplicarFiltros(){
 }
 function resetFiltros(){filtroEstados=['pendiente','vencido','pagado'];filtroCats=null;closeModal('oFiltro');render();}
 
+function autoActivateFromInstaller(){
+  try{
+    const params=new URLSearchParams(location.search);
+    const key=(params.get('key')||'').trim();
+    if(!key) return;
+
+    // Si ya hay una licencia activa guardada, no pisamos nada.
+    if(!LICENSE_STATE.active){
+      const licKey=document.getElementById('licKey');
+      const licEndpoint=document.getElementById('licEndpoint');
+      if(licKey) licKey.value=key;
+      if(licEndpoint && !licEndpoint.value) licEndpoint.value=DEFAULT_LICENSE_ENDPOINT;
+      try{localStorage.setItem(LICENSE_STORAGE_KEY, key);}catch(e){}
+      guardarYVerificarLicencia();
+    }
+
+    // Limpiar la clave de la barra de direcciones / historial del navegador.
+    const cleanUrl=location.href.split('?')[0];
+    history.replaceState(null, '', cleanUrl);
+  }catch(e){}
+}
+
 loadLicenseState();
 renderLicenseUI();
+autoActivateFromInstaller();
 render();
 </script>
