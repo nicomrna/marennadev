@@ -34,7 +34,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-backg
 .cat-icon-wrap{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .pago-info{flex:1;min-width:0}
 .pago-nombre{font-size:14px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pago-meta{font-size:12px;color:var(--color-text-secondary,#888);display:flex;gap:10px;align-items:center}
+.pago-meta{font-size:12px;color:var(--color-text-secondary,#888);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .pago-meta i{font-size:13px;vertical-align:-1px}
 .pago-right{text-align:right;flex-shrink:0}
 .pago-monto{font-size:14px;font-weight:500;margin-bottom:3px}
@@ -44,13 +44,15 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-backg
 .add-row button{flex:1;padding:9px;border-radius:8px;background:var(--color-background-secondary,#f0f0ec);border:0.5px dashed var(--color-border-secondary,rgba(0,0,0,0.25));cursor:pointer;font-size:13px;color:var(--color-text-secondary,#888);display:flex;align-items:center;justify-content:center;gap:6px}
 .add-row button:hover{background:var(--color-background-primary,#fff);border-style:solid;color:var(--color-text-primary,#1a1a18)}
 .divider{height:0.5px;background:var(--color-border-tertiary,rgba(0,0,0,0.1));margin:1.25rem 0}
-.hist-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.08));font-size:13px}
+.hist-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.08));font-size:13px;cursor:pointer;border-radius:6px;transition:background .12s}
+.hist-row:hover{background:var(--color-background-secondary,#f0f0ec)}
 .hist-row:last-child{border-bottom:none}
 .hist-mes{min-width:80px;color:var(--color-text-secondary,#888)}
 .hist-bar-wrap{flex:1;background:var(--color-background-secondary,#f0f0ec);border-radius:3px;height:5px}
 .hist-bar{height:5px;background:#1d9e75;border-radius:3px}
 .hist-monto{min-width:90px;text-align:right;font-weight:500}
 .hist-pagados{min-width:40px;text-align:center;color:var(--color-text-secondary,#888);font-size:12px}
+.hist-row.is-current{background:var(--color-background-info,#e6f1fb)}
 
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center}
 .modal-backdrop.open{display:flex}
@@ -116,6 +118,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-backg
       <h1>Pagos mensuales</h1>
     </div>
     <div class="topbar-actions">
+      <button class="icon-btn" onclick="openServiciosAdmin()" title="Gestionar servicios" aria-label="Gestionar servicios"><i class="ti ti-list-details"></i></button>
       <button class="icon-btn" onclick="openCats()" title="Gestionar categorías" aria-label="Gestionar categorías"><i class="ti ti-tag"></i></button>
       <button class="icon-btn" onclick="openLicencia()" title="Licencia" aria-label="Licencia"><i class="ti ti-license"></i></button>
       <button class="icon-btn" onclick="openExport()" title="Exportar / Importar JSON" aria-label="Exportar datos"><i class="ti ti-download"></i></button>
@@ -190,7 +193,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-backg
       <option>Mercado Pago</option><option>Débito</option><option>Otro</option>
     </select>
   </div>
-  <div class="field">
+  <div class="field" id="fEstadoWrap">
     <label>Estado</label>
     <select id="fEstado"><option value="pendiente">Pendiente</option><option value="pagado">Pagado</option></select>
   </div>
@@ -202,6 +205,21 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--color-backg
     <div class="field"><label>Notas</label><input id="fNotas" type="text" placeholder="Opcional"></div>
   </div>
   <div class="btn-row" id="btnServRow"></div>
+</div>
+</div>
+
+<div class="modal-backdrop" id="oServiciosAdmin" onclick="backdropClick('oServiciosAdmin',event)">
+<div class="modal" style="max-width:480px">
+  <div class="modal-hdr">
+    <h2>Gestionar servicios</h2>
+    <button class="icon-btn" onclick="closeModal('oServiciosAdmin')" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </div>
+  <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px">Editá los datos base de cada servicio o eliminalo por completo (se quita de todos los meses).</p>
+  <div id="serviciosAdminList" style="max-height:360px;overflow-y:auto"></div>
+  <div class="btn-row">
+    <button class="btn" onclick="closeModal('oServiciosAdmin')">Cerrar</button>
+    <button class="btn primary" onclick="closeModal('oServiciosAdmin');openAgregar()"><i class="ti ti-plus"></i> Nuevo servicio</button>
+  </div>
 </div>
 </div>
 
@@ -352,6 +370,8 @@ const COLORS=[{bg:'#faeeda'},{bg:'#fcebeb'},{bg:'#e6f1fb'},{bg:'#e1f5ee'},{bg:'#
 
 let mesActual=new Date().getMonth(), anioActual=new Date().getFullYear();
 let editServIdx=null, editCatIdx=null;
+let servModalMode='mes'; // 'mes' = edición ligada al pago de un mes puntual, 'maestro' = edición de datos base del servicio
+let editServId=null; // id del servicio cuando se edita en modo 'maestro'
 let selIcon='ti-bolt', selColor='#faeeda';
 let filtroEstados=['pendiente','vencido','pagado'], filtroCats=null;
 
@@ -368,13 +388,7 @@ function defaultCats(){return[
   {id:'seguro',nombre:'Seguro',icon:'ti-shield',color:'#e6f1fb'},
   {id:'otros',nombre:'Otros',icon:'ti-dots',color:'#f1efe8'},
 ];}
-function defaultServicios(){return[
-  {id:1,nombre:'Luz',cat:'luz',freq:'mensual',dia:18,monto:76500,medio:'Transferencia'},
-  {id:2,nombre:'Gas',cat:'gas',freq:'mensual',dia:23,monto:6800,medio:'Transferencia'},
-  {id:3,nombre:'Internet',cat:'internet',freq:'mensual',dia:13,monto:31000,medio:'Transferencia'},
-  {id:4,nombre:'Alquiler',cat:'alquiler',freq:'mensual',dia:8,monto:380000,medio:'Transferencia'},
-  {id:5,nombre:'Expensas',cat:'expensas',freq:'mensual',dia:11,monto:69900,medio:'Transferencia'},
-];}
+function defaultServicios(){return[];}
 
 function loadDB(){try{const r=localStorage.getItem('pagosDB_v2');return r?JSON.parse(r):null}catch(e){return null}}
 function saveDB(){try{localStorage.setItem('pagosDB_v2',JSON.stringify(DB))}catch(e){}}
@@ -636,6 +650,7 @@ function renderLista(pagos){
           ${s.dia?`<span><i class="ti ti-calendar-event"></i> Vence el ${s.dia}</span>`:''}
           ${s.medio?`<span><i class="ti ti-credit-card"></i> ${s.medio}</span>`:''}
           ${p.fechaPago?`<span><i class="ti ti-check"></i> ${p.fechaPago}</span>`:''}
+          ${p.notas?`<span><i class="ti ti-note"></i> ${p.notas}</span>`:''}
         </div>
       </div>
       <div class="pago-right">
@@ -654,16 +669,23 @@ function renderHistorial(){
     const pagos=DB.meses[`${a}_${m}`]||[];
     const total=pagos.filter(p=>p.estado==='pagado').reduce((s,p)=>{const sv=getServicio(p.id);return s+(p.montoReal||sv?.monto||0);},0);
     const pagados=pagos.filter(p=>p.estado==='pagado').length;
-    list.push({mes:MESES[m].slice(0,3),anio:a,total,pagados});
+    list.push({mes:MESES[m].slice(0,3),anio:a,total,pagados,m,a});
   }
   const max=Math.max(...list.map(x=>x.total),1);
   document.getElementById('histList').innerHTML=list.map(x=>`
-    <div class="hist-row">
+    <div class="hist-row${x.m===mesActual&&x.a===anioActual?' is-current':''}" onclick="jumpToMonth(${x.m},${x.a})" role="button" tabindex="0" title="Ver detalle de ${x.mes} ${x.a}">
       <span class="hist-mes">${x.mes} ${x.anio}</span>
       <div class="hist-bar-wrap"><div class="hist-bar" style="width:${Math.round(x.total/max*100)}%"></div></div>
       <span class="hist-pagados">${x.pagados>0?x.pagados+' pag.':''}</span>
       <span class="hist-monto">${x.total?formatPeso(x.total):'—'}</span>
     </div>`).join('');
+}
+
+function jumpToMonth(m,a){
+  mesActual=m;anioActual=a;
+  render();
+  const list=document.getElementById('pagosList');
+  if(list) list.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function cambiarMes(d){
@@ -693,10 +715,12 @@ function setupEstadoToggle(){
 
 function openAgregar(){
   if(!requireLicense()) return;
-  editServIdx=null;
+  servModalMode='mes';
+  editServIdx=null;editServId=null;
+  document.getElementById('fEstadoWrap').style.display='block';
   document.getElementById('mServTitle').textContent='Nuevo servicio';
   document.getElementById('fNombre').value='';
-  populateCatSelect('fCat','luz');
+  populateCatSelect('fCat',DB.categorias[0]?.id);
   document.getElementById('fFreq').value='mensual';
   document.getElementById('fDia').value='';
   document.getElementById('fMonto').value='';
@@ -714,9 +738,11 @@ function openAgregar(){
 
 function openEditar(idx){
   if(!requireLicense()) return;
+  servModalMode='mes';
   const pagos=getMesPagos(mesActual,anioActual);
   const p=pagos[idx];const s=getServicio(p.id);if(!s)return;
-  editServIdx=idx;
+  editServIdx=idx;editServId=null;
+  document.getElementById('fEstadoWrap').style.display='block';
   document.getElementById('mServTitle').textContent=s.nombre;
   document.getElementById('fNombre').value=s.nombre;
   populateCatSelect('fCat',s.cat);
@@ -731,7 +757,7 @@ function openEditar(idx){
   document.getElementById('fNotas').value=p.notes||p.notas||'';
   setupEstadoToggle();
   document.getElementById('btnServRow').innerHTML=`
-    <button class="btn danger" onclick="eliminarServicio()" style="flex:0 0 auto;padding:8px 12px"><i class="ti ti-trash"></i></button>
+    <button class="btn danger" onclick="eliminarServicio()" style="flex:0 0 auto;padding:8px 12px" title="Quitar de este mes"><i class="ti ti-trash"></i></button>
     ${p.estado==='pagado'
       ?`<button class="btn" onclick="desmarcarPago()"><i class="ti ti-refresh"></i> Desmarcar</button>`
       :`<button class="btn success" onclick="marcarPagado()"><i class="ti ti-check"></i> Marcar pagado</button>`}
@@ -758,6 +784,15 @@ function guardarServicio(){
   const dia=parseInt(document.getElementById('fDia').value)||0;
   const monto=parseFloat(document.getElementById('fMonto').value)||0;
   const medio=document.getElementById('fMedio').value;
+
+  if(servModalMode==='maestro'){
+    const si=DB.servicios.findIndex(s=>s.id===editServId);
+    if(si>=0) DB.servicios[si]={...DB.servicios[si],nombre,cat,freq,dia,monto,medio};
+    saveDB();closeModal('oServicio');
+    renderServiciosAdminList();render();
+    return;
+  }
+
   const estado=document.getElementById('fEstado').value;
   const fechaPago=document.getElementById('fFechaPago').value||null;
   const montoReal=parseFloat(document.getElementById('fMontoReal').value)||null;
@@ -779,9 +814,64 @@ function guardarServicio(){
   saveDB();closeModal('oServicio');render();
 }
 function eliminarServicio(){
-  if(!confirm('¿Eliminar este servicio del mes?'))return;
+  if(!confirm('¿Quitar este servicio solo de este mes? El servicio seguirá existiendo en otros meses. Para eliminarlo por completo usá "Gestionar servicios".'))return;
   const pagos=getMesPagos(mesActual,anioActual);
   pagos.splice(editServIdx,1);saveMesPagos(mesActual,anioActual,pagos);closeModal('oServicio');render();
+}
+
+function openServiciosAdmin(){
+  if(!requireLicense()) return;
+  renderServiciosAdminList();
+  openModal('oServiciosAdmin');
+}
+function renderServiciosAdminList(){
+  const el=document.getElementById('serviciosAdminList');
+  if(!DB.servicios.length){
+    el.innerHTML='<div style="text-align:center;padding:1.5rem;color:var(--color-text-secondary,#888);font-size:13px"><i class="ti ti-inbox" style="font-size:22px;display:block;margin-bottom:6px"></i>Todavía no agregaste servicios.</div>';
+    return;
+  }
+  el.innerHTML=DB.servicios.map(s=>{
+    const c=getCat(s.cat);
+    return `<div class="cat-list-item">
+      <div class="cat-icon-sm" style="background:${c.color}"><i class="ti ${c.icon}" style="font-size:13px;color:#${darken(c.color)}"></i></div>
+      <div style="flex:1;min-width:0">
+        <div class="cat-name" style="font-weight:500">${s.nombre}</div>
+        <div style="font-size:11px;color:var(--color-text-secondary,#888)">${c.nombre} · vence el ${s.dia||'—'} · ${formatPeso(s.monto)}</div>
+      </div>
+      <button class="icon-btn" style="width:28px;height:28px;font-size:13px" onclick="openEditarMaestro(${s.id})" aria-label="Editar servicio"><i class="ti ti-edit"></i></button>
+      <button class="icon-btn" style="width:28px;height:28px;font-size:13px" onclick="eliminarServicioPermanente(${s.id})" aria-label="Eliminar servicio"><i class="ti ti-trash"></i></button>
+    </div>`;
+  }).join('');
+}
+function openEditarMaestro(servId){
+  const s=getServicio(servId);if(!s)return;
+  servModalMode='maestro';
+  editServId=servId;editServIdx=null;
+  document.getElementById('fEstadoWrap').style.display='none';
+  document.getElementById('fPagoDetalles').style.display='none';
+  document.getElementById('mServTitle').textContent='Editar '+s.nombre;
+  document.getElementById('fNombre').value=s.nombre;
+  populateCatSelect('fCat',s.cat);
+  document.getElementById('fFreq').value=s.freq||'mensual';
+  document.getElementById('fDia').value=s.dia||'';
+  document.getElementById('fMonto').value=s.monto||'';
+  document.getElementById('fMedio').value=s.medio||'Transferencia';
+  document.getElementById('btnServRow').innerHTML=`
+    <button class="btn danger" onclick="closeModal('oServicio');eliminarServicioPermanente(${servId})" style="flex:0 0 auto;padding:8px 12px" title="Eliminar por completo"><i class="ti ti-trash"></i></button>
+    <button class="btn" onclick="closeModal('oServicio');openServiciosAdmin()">Cancelar</button>
+    <button class="btn primary" onclick="guardarServicio()"><i class="ti ti-device-floppy"></i> Guardar</button>`;
+  closeModal('oServiciosAdmin');
+  openModal('oServicio');
+}
+function eliminarServicioPermanente(servId){
+  const s=getServicio(servId);if(!s)return;
+  if(!confirm(`¿Eliminar "${s.nombre}" por completo? Se quitará de todos los meses e historial futuro.`))return;
+  DB.servicios=DB.servicios.filter(x=>x.id!==servId);
+  Object.keys(DB.meses).forEach(k=>{DB.meses[k]=DB.meses[k].filter(p=>p.id!==servId);});
+  if(DB.vencimientos) DB.vencimientos=DB.vencimientos.filter(v=>v.servId!==servId);
+  saveDB();
+  renderServiciosAdminList();
+  render();
 }
 
 function openProgramar(){
