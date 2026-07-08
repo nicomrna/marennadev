@@ -8,6 +8,11 @@ const LICENCIAS_JSON = {
     "expiresAt": "2026-12-31T23:59:59.000Z", 
     "message": "Licencia de Lanzamiento Promocional Activa"
   },
+    "LIC-PERMA": {
+    "active": true,
+    "expiresAt": "2099-12-31T23:59:59.000Z", 
+    "message": "Licencia de Permanente Activa"
+  },
   "LIC-TEST-9999-OK": {
     "active": true,
     "expiresAt": "2026-01-01T00:00:00.000Z",
