@@ -1,27 +1,9 @@
-<?php
-// presupuesto-P-2026-0001.php
-// Presupuesto formal — reemplazá los placeholders [COMPLETAR] con tus datos reales.
-
-$numero_presupuesto = "P-2026-0001";
-$fecha_emision      = date("d/m/Y");
-$whatsapp_numero    = "542317402288"; // [COMPLETAR] tu número con código de país, sin + ni espacios
-$mail_contacto      = "marennanicolas@yahoo.com"; // [COMPLETAR]
-
-$items = [
-  ["tag" => "SUSCRIPCIÓN MENSUAL", "titulo" => "Plan Tienda Nube Esencial", "detalle" => "Plataforma de e-commerce, pasarela de pagos y hosting incluido.", "precio" => "\$26.999 / mes"],
-  ["tag" => "ANUAL", "titulo" => "Dominio web", "detalle" => "Ej: okeylibreria.com — \$16.900 x 12 meses.", "precio" => "\$16.900 / mes"],
-  ["tag" => "PAGO ÚNICO", "titulo" => "Implementación tienda online", "detalle" => "Configuración completa, diseño, carga inicial y puesta en marcha.", "precio" => "\$490.000"],
-];
-
-$total_abonado = "250.000";
-$saldo_restante = "283.900";
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Presupuesto <?php echo $numero_presupuesto; ?></title>
+<title>Presupuesto P-2026-0001</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -226,8 +208,8 @@ $saldo_restante = "283.900";
       <img src="logo.png" alt="Logo">
     </div>
     <div class="brand-doc">
-      <strong>PRESUPUESTO <?php echo htmlspecialchars($numero_presupuesto); ?></strong>
-      Emitido: <?php echo htmlspecialchars($fecha_emision); ?>
+      <strong>PRESUPUESTO P-2026-0001</strong>
+      Emitido: <span id="fecha-emision"></span>
     </div>
   </header>
 
@@ -238,25 +220,41 @@ $saldo_restante = "283.900";
 
   <div class="label">DETALLE DEL PRESUPUESTO</div>
 
-  <?php foreach ($items as $item): ?>
   <div class="laburo-item reveal active">
     <div class="info">
-      <span class="tag"><?php echo htmlspecialchars($item['tag']); ?></span>
-      <h4><?php echo htmlspecialchars($item['titulo']); ?></h4>
-      <p><?php echo htmlspecialchars($item['detalle']); ?></p>
+      <span class="tag">SUSCRIPCIÓN MENSUAL</span>
+      <h4>Plan Tienda Nube Esencial</h4>
+      <p>Plataforma de e-commerce, pasarela de pagos y hosting incluido.</p>
     </div>
-    <div class="precio"><?php echo htmlspecialchars($item['precio']); ?></div>
+    <div class="precio">$26.999 / mes</div>
   </div>
-  <?php endforeach; ?>
+
+  <div class="laburo-item reveal active">
+    <div class="info">
+      <span class="tag">ANUAL</span>
+      <h4>Dominio web</h4>
+      <p>Ej: okeylibreria.com — $16.900 x 12 meses.</p>
+    </div>
+    <div class="precio">$16.900 / mes</div>
+  </div>
+
+  <div class="laburo-item reveal active">
+    <div class="info">
+      <span class="tag">PAGO ÚNICO</span>
+      <h4>Implementación tienda online</h4>
+      <p>Configuración completa, diseño, carga inicial y puesta en marcha.</p>
+    </div>
+    <div class="precio">$490.000</div>
+  </div>
 
   <div class="totales">
     <div class="fila-total">
       <span>Total abonado</span>
-      <span>$<?php echo htmlspecialchars($total_abonado); ?></span>
+      <span>$250.000</span>
     </div>
     <div class="fila-total saldo">
       <span>Saldo restante</span>
-      <span>$<?php echo htmlspecialchars($saldo_restante); ?></span>
+      <span>$283.900</span>
     </div>
   </div>
 
@@ -274,16 +272,22 @@ $saldo_restante = "283.900";
   <div class="cta-box reveal active">
     <h3>¿Ya tenés todo listo?</h3>
     <p>Envianos los datos solicitados para poner en marcha tu tienda online lo antes posible.</p>
-    <a class="btn-wa" href="https://wa.me/<?php echo $whatsapp_numero; ?>?text=<?php echo urlencode('Hola! Te envío los datos para el presupuesto ' . $numero_presupuesto); ?>" target="_blank" rel="noopener">ENVIAR DATOS POR WHATSAPP</a>
+    <a class="btn-wa" href="https://wa.me/5491100000000?text=Hola!%20Te%20env%C3%ADo%20los%20datos%20para%20el%20presupuesto%20P-2026-0001" target="_blank" rel="noopener">ENVIAR DATOS POR WHATSAPP</a>
     <div class="proyecto-links">
-      <a class="btn-proyect" href="mailto:<?php echo htmlspecialchars($mail_contacto); ?>?subject=Datos%20presupuesto%20<?php echo htmlspecialchars($numero_presupuesto); ?>">ENVIAR POR MAIL →</a>
+      <a class="btn-proyect" href="mailto:hola@tudominio.com?subject=Datos%20presupuesto%20P-2026-0001">ENVIAR POR MAIL →</a>
     </div>
   </div>
 
   <footer>
-    PRESUPUESTO <?php echo htmlspecialchars($numero_presupuesto); ?> · <?php echo date('Y'); ?>
+    PRESUPUESTO P-2026-0001 · <span id="anio"></span>
   </footer>
 
 </div>
+
+<script>
+  var hoy = new Date();
+  document.getElementById('fecha-emision').textContent = String(hoy.getDate()).padStart(2,'0') + '/' + String(hoy.getMonth()+1).padStart(2,'0') + '/' + hoy.getFullYear();
+  document.getElementById('anio').textContent = hoy.getFullYear();
+</script>
 </body>
 </html>
