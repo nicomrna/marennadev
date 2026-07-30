@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presupuesto P-2026-0001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --papel: #080808;
+      --tinta: #f0f0f0;
+      --gris-soft: #888;
+      --blanco: #ffffff;
+      --serif: 'Merriweather', serif;
+      --sans: 'Montserrat', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--papel); color: var(--tinta);
+      font-family: var(--serif); line-height: 1.8; overflow-x: hidden;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 60px 24px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 80px; border-bottom: 1px solid #1a1a1a; padding-bottom: 30px;
+    }
+    .brand { display: flex; align-items: center; gap: 24px; }
+    .brand img { width: 85px; height: 85px; border-radius: 12px; filter: grayscale(1); }
+    .brand h1 {
+      font-family: var(--sans);
+      font-size: 1.8rem;
+      margin: 0;
+      letter-spacing: -1.5px;
+      color: var(--blanco);
+      line-height: 1;
+    }
+    .brand-doc {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--gris-soft);
+      text-align: right;
+      letter-spacing: 1px;
+    }
+    .brand-doc strong { color: var(--blanco); display: block; font-size: 1rem; margin-bottom: 4px; }
+
+    .hero h2 {
+      font-family: var(--sans); font-size: clamp(2.3rem, 8vw, 4.2rem);
+      line-height: 0.95; margin-bottom: 40px; letter-spacing: -3px; color: var(--blanco);
+    }
+    .hero p { font-size: 1.35rem; color: var(--gris-soft); margin-bottom: 1.5rem; }
+
+    .label {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--blanco);
+      margin: 100px 0 40px 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+    .label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.3); }
+
+    .laburo-item { margin-bottom: 50px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+    .laburo-item .info { flex: 1; min-width: 240px; }
+    .laburo-item h4 { font-family: var(--sans); font-size: 1.6rem; margin: 0 0 8px 0; color: var(--blanco); letter-spacing: -1px; }
+    .laburo-item p { color: var(--gris-soft); font-size: 1rem; margin: 0; }
+    .laburo-item .precio { font-family: var(--sans); font-size: 1.3rem; font-weight: 900; color: var(--blanco); white-space: nowrap; }
+    .tag { font-family: var(--mono); font-size: 0.7rem; color: var(--blanco); background: #1a1a1a; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; display: inline-block; }
+
+    .totales {
+      margin-top: 20px;
+      border-top: 1px solid #1a1a1a;
+      padding-top: 30px;
+    }
+    .fila-total {
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--sans); padding: 10px 0;
+    }
+    .fila-total span:first-child { color: var(--gris-soft); font-size: 1rem; letter-spacing: 1px; }
+    .fila-total span:last-child { color: var(--blanco); font-size: 1.4rem; font-weight: 900; }
+    .fila-total.saldo span:last-child { color: #f0c419; }
+
+    /* ---- Datos confirmados ---- */
+    .confirmados-lista { list-style: none; margin: 0; padding: 0; }
+    .confirmados-lista li {
+      padding: 16px 0 16px 42px;
+      position: relative;
+      border-bottom: 1px solid #151515;
+      color: var(--gris-soft);
+      font-size: 1.02rem;
+    }
+    .confirmados-lista li:last-child { border-bottom: none; }
+    .confirmados-lista li::before {
+      content: '✓';
+      position: absolute; left: 0; top: 14px;
+      font-family: var(--mono); font-weight: bold; color: #4ade80;
+      width: 26px; height: 26px; border: 1px solid #234d33; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
+      background: rgba(74,222,128,0.08);
+    }
+    .confirmados-lista strong { color: var(--blanco); }
+
+    /* ---- Formulario datos pendientes ---- */
+    .form-box {
+      background: linear-gradient(145deg, #0f0f0f 0%, #080808 100%);
+      border: 1px solid #222;
+      border-radius: 6px;
+      padding: 40px;
+    }
+    .form-box .form-intro {
+      color: var(--gris-soft);
+      font-size: 1rem;
+      margin: 0 0 35px 0;
+    }
+
+    .campo-grupo { margin-bottom: 36px; }
+    .campo-grupo > label.titulo-campo {
+      display: block;
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blanco);
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+    .campo-grupo > .desc-campo {
+      font-size: 0.92rem;
+      color: var(--gris-soft);
+      margin: 0 0 18px 0;
+    }
+
+    .dia-fila {
+      display: grid;
+      grid-template-columns: 110px 1fr 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #151515;
+    }
+    .dia-fila:last-child { border-bottom: none; }
+    .dia-fila .dia-nombre {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--blanco);
+      font-weight: 700;
+    }
+    .dia-fila input[type="time"] {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      color: var(--tinta);
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      padding: 8px 10px;
+      border-radius: 4px;
+      width: 100%;
+    }
+    .dia-fila input[type="time"]:disabled { opacity: 0.3; }
+    .dia-fila .cerrado-check {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: 0.75rem; color: var(--gris-soft);
+      white-space: nowrap;
+    }
+    .dia-fila .cerrado-check input { accent-color: var(--blanco); }
+
+    .radio-fila { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 14px; }
+    .radio-opt {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--sans); font-size: 0.95rem; color: var(--tinta);
+      cursor: pointer;
+    }
+    .radio-opt input { accent-color: var(--blanco); width: 16px; height: 16px; }
+
+    .campo-porcentaje {
+      display: none;
+      max-width: 220px;
+    }
+    .campo-porcentaje.visible { display: block; }
+    .campo-porcentaje label {
+      display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--gris-soft); margin-bottom: 8px;
+    }
+    .campo-porcentaje input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      color: var(--tinta);
+      font-family: var(--mono);
+      font-size: 1rem;
+      padding: 10px 12px;
+      border-radius: 4px;
+    }
+
+    .file-input-wrap {
+      border: 1px dashed #333;
+      border-radius: 4px;
+      padding: 20px;
+      text-align: center;
+    }
+    .file-input-wrap input[type="file"] {
+      color: var(--gris-soft);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      width: 100%;
+    }
+
+    .check-registro {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.95rem; color: var(--gris-soft);
+    }
+    .check-registro input { margin-top: 4px; accent-color: var(--blanco); }
+    .check-registro a { color: var(--blanco); }
+
+    .btn-enviar {
+      width: 100%;
+      background: var(--blanco);
+      color: #000;
+      padding: 20px;
+      font-family: var(--sans);
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+      margin-top: 10px;
+    }
+    .btn-enviar:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .btn-enviar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .form-status {
+      margin-top: 18px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      text-align: center;
+      display: none;
+    }
+    .form-status.ok { color: #4ade80; display: block; }
+    .form-status.error { color: #f87171; display: block; }
+
+    .gracias-box { display: none; text-align: center; padding: 20px 0; }
+    .gracias-box.visible { display: block; }
+    .gracias-box h3 { font-family: var(--sans); color: var(--blanco); font-size: 1.6rem; margin-bottom: 12px; letter-spacing: -1px; }
+    .gracias-box p { color: var(--gris-soft); font-size: 1rem; }
+
+    .cta-box {
+      margin-top: 80px;
+      padding: 60px;
+      background: linear-gradient(145deg, #0f0f0f 0%, #080808 100%);
+      border: 1px solid #222;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+    }
+    .cta-box h3 {
+      font-family: var(--sans);
+      font-size: 2.2rem;
+      line-height: 1.1;
+      margin: 0;
+      color: var(--blanco);
+      letter-spacing: -2px;
+    }
+    .cta-box p {
+      margin: 30px 0;
+      color: var(--gris-soft);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .btn-wa {
+      display: inline-block;
+      background: var(--blanco);
+      color: #000;
+      padding: 22px 45px;
+      font-family: var(--sans);
+      font-weight: 900;
+      text-decoration: none;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .btn-wa:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .proyecto-links { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-proyect {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-decoration: none;
+      padding: 10px 18px;
+      border: 1px solid var(--blanco);
+      color: var(--blanco);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-proyect:hover { background: var(--blanco); color: #000; }
+
+    footer {
+      margin-top: 100px;
+      padding: 60px 0;
+      border-top: 1px solid #1a1a1a;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--gris-soft);
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+      .brand img { width: 60px; height: 60px; }
+      .brand h1 { font-size: 1.4rem; }
+      .hero h2 { letter-spacing: -1px; }
+      .cta-box, .form-box { padding: 26px; }
+      header { flex-wrap: wrap; gap: 20px; }
+      .brand-doc { text-align: left; }
+      .dia-fila { grid-template-columns: 1fr; gap: 8px; }
+      .dia-fila .cerrado-check { justify-content: flex-start; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="reveal active">
+    <div class="brand">
+      <img src="logo.png" alt="Logo">
+    </div>
+    <div class="brand-doc">
+      <strong>PRESUPUESTO P-2026-0001</strong>
+      Emitido: <span id="fecha-emision"></span>
+    </div>
+  </header>
+
+  <section class="hero reveal active">
+    <h2>Presupuesto<br>aprobado.</h2>
+    <p>Gracias por confirmar el proyecto. A continuación encontrás el detalle desglosado, el estado de pago y los datos que necesitamos para avanzar con la implementación.</p>
+  </section>
+
+  <div class="label">DETALLE DEL PRESUPUESTO</div>
+
+  <div class="laburo-item reveal active">
+    <div class="info">
+      <span class="tag">SUSCRIPCIÓN MENSUAL</span>
+      <h4>Plan Tienda Nube Esencial</h4>
+      <p>Plataforma de e-commerce, pasarela de pagos y hosting incluido.</p>
+    </div>
+    <div class="precio">$26.999 / mes</div>
+  </div>
+
+  <div class="laburo-item reveal active">
+    <div class="info">
+      <span class="tag">ANUAL</span>
+      <h4>Dominio web</h4>
+      <p>okeylibreria.com — $16.900 x 12 meses.</p>
+    </div>
+    <div class="precio">$16.900 / mes</div>
+  </div>
+
+  <div class="laburo-item reveal active">
+    <div class="info">
+      <span class="tag">PAGO ÚNICO</span>
+      <h4>Implementación tienda online</h4>
+      <p>Configuración completa, diseño, carga inicial y puesta en marcha.</p>
+    </div>
+    <div class="precio">$490.000</div>
+  </div>
+
+  <div class="totales">
+    <div class="fila-total">
+      <span>Total abonado</span>
+      <span>$250.000</span>
+    </div>
+    <div class="fila-total saldo">
+      <span>Saldo restante</span>
+      <span>$283.900</span>
+    </div>
+  </div>
+
+  <div class="label">DATOS YA CONFIRMADOS</div>
+
+  <ul class="confirmados-lista reveal active">
+    <li><strong>Dominio:</strong> okeylibreria.com</li>
+    <li><strong>Dirección:</strong> Calle 12 Nro. 1531 entre 62 y 63</li>
+    <li><strong>CUIT:</strong> 27-27058961-3</li>
+    <li><strong>WhatsApp comercial:</strong> 2216801681</li>
+    <li><strong>Email comercial:</strong> okeyregalos12@gmail.com</li>
+  </ul>
+
+  <div class="label">DATOS QUE FALTAN</div>
+
+  <div class="form-box reveal active">
+    <p class="form-intro">Completá lo siguiente y lo recibimos automáticamente por mail — no hace falta que nos escribas aparte.</p>
+
+    <form id="form-presupuesto" action="https://formsubmit.co/nico2820101@gmail.com" method="POST" enctype="multipart/form-data">
+
+      <!-- Config FormSubmit -->
+      <input type="hidden" name="_subject" value="Datos presupuesto P-2026-0001 · Okey Librería">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="Presupuesto" value="P-2026-0001">
+
+      <div class="campo-grupo">
+        <label class="titulo-campo">Horario de atención</label>
+        <p class="desc-campo">Tildá "Cerrado" en los días que no abren.</p>
+
+        <div id="dias-horario">
+          <!-- generado por JS -->
+        </div>
+      </div>
+
+      <div class="campo-grupo">
+        <label class="titulo-campo">¿Ofrecen descuento por pago en efectivo?</label>
+        <div class="radio-fila">
+          <label class="radio-opt"><input type="radio" name="descuento_efectivo" value="Sí" required> Sí</label>
+          <label class="radio-opt"><input type="radio" name="descuento_efectivo" value="No" required> No</label>
+        </div>
+        <div class="campo-porcentaje" id="campo-porcentaje">
+          <label for="porcentaje_desc">¿Qué porcentaje?</label>
+          <input type="number" id="porcentaje_desc" name="porcentaje_descuento" min="0" max="100" step="1" placeholder="Ej: 10">
+        </div>
+      </div>
+
+      <div class="campo-grupo">
+        <label class="titulo-campo">Logo</label>
+        <p class="desc-campo">Preferentemente .png o .svg, con fondo transparente.</p>
+        <div class="file-input-wrap">
+          <input type="file" name="logo" accept=".png,.svg,.jpg,.jpeg">
+        </div>
+      </div>
+
+      <div class="campo-grupo">
+        <label class="check-registro">
+          <input type="checkbox" name="registro_mi_correo" value="Confirmado">
+          Ya me registré en <a href="https://www.correoargentino.com.ar/MiCorreo/public" target="_blank" rel="noopener">Mi Correo — Correo Argentino</a>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-enviar" id="btn-enviar">ENVIAR DATOS</button>
+      <p class="form-status" id="form-status"></p>
+    </form>
+
+    <div class="gracias-box" id="gracias-box">
+      <h3>¡Listo, recibimos tus datos!</h3>
+      <p>Ya estamos avanzando con la configuración de tu tienda. Cualquier cosa, escribinos por WhatsApp.</p>
+    </div>
+  </div>
+
+  <div class="cta-box reveal active">
+    <h3>¿Preferís mandarlo directo?</h3>
+    <p>Si te resulta más rápido, también podés enviarnos los datos por WhatsApp o mail.</p>
+    <a class="btn-wa" href="https://wa.me/542317402288?text=Hola!%20Te%20env%C3%ADo%20los%20datos%20para%20el%20presupuesto%20P-2026-0001" target="_blank" rel="noopener">ENVIAR DATOS POR WHATSAPP</a>
+    <div class="proyecto-links">
+      <a class="btn-proyect" href="mailto:nico2820101@gmail.com?subject=Datos%20presupuesto%20P-2026-0001">ENVIAR POR MAIL →</a>
+    </div>
+  </div>
+
+  <footer>
+    PRESUPUESTO P-2026-0001 · <span id="anio"></span>
+  </footer>
+
+</div>
+
+<script>
+  var hoy = new Date();
+  document.getElementById('fecha-emision').textContent = String(hoy.getDate()).padStart(2,'0') + '/' + String(hoy.getMonth()+1).padStart(2,'0') + '/' + hoy.getFullYear();
+  document.getElementById('anio').textContent = hoy.getFullYear();
+
+  // ---- Generar filas de horario Lunes a Domingo ----
+  var dias = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+  var contenedorDias = document.getElementById('dias-horario');
+  dias.forEach(function(dia, i){
+    var fila = document.createElement('div');
+    fila.className = 'dia-fila';
+    fila.innerHTML =
+      '<span class="dia-nombre">' + dia + '</span>' +
+      '<input type="time" name="horario_' + dia.toLowerCase() + '_apertura" aria-label="Apertura ' + dia + '">' +
+      '<input type="time" name="horario_' + dia.toLowerCase() + '_cierre" aria-label="Cierre ' + dia + '">' +
+      '<label class="cerrado-check"><input type="checkbox" data-dia="' + i + '"> Cerrado</label>';
+    contenedorDias.appendChild(fila);
+
+    var checkbox = fila.querySelector('input[type="checkbox"]');
+    var inputsTime = fila.querySelectorAll('input[type="time"]');
+    checkbox.addEventListener('change', function(){
+      inputsTime.forEach(function(inp){
+        inp.disabled = checkbox.checked;
+        if (checkbox.checked) inp.value = '';
+      });
+    });
+  });
+
+  // ---- Mostrar % sólo si contesta "Sí" ----
+  var radiosDescuento = document.querySelectorAll('input[name="descuento_efectivo"]');
+  var campoPorcentaje = document.getElementById('campo-porcentaje');
+  var inputPorcentaje = document.getElementById('porcentaje_desc');
+  radiosDescuento.forEach(function(radio){
+    radio.addEventListener('change', function(){
+      var mostrar = radio.value === 'Sí' && radio.checked;
+      if (mostrar) {
+        campoPorcentaje.classList.add('visible');
+        inputPorcentaje.required = true;
+      } else if (radio.checked && radio.value === 'No') {
+        campoPorcentaje.classList.remove('visible');
+        inputPorcentaje.required = false;
+        inputPorcentaje.value = '';
+      }
+    });
+  });
+
+  // ---- Envío por AJAX a FormSubmit (sin recargar la página) ----
+  var form = document.getElementById('form-presupuesto');
+  var btn = document.getElementById('btn-enviar');
+  var status = document.getElementById('form-status');
+  var graciasBox = document.getElementById('gracias-box');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'ENVIANDO...';
+    status.className = 'form-status';
+    status.textContent = '';
+
+    var formData = new FormData(form);
+
+    fetch('https://formsubmit.co/ajax/nico2820101@gmail.com', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(){
+      form.style.display = 'none';
+      graciasBox.classList.add('visible');
+    })
+    .catch(function(){
+      status.className = 'form-status error';
+      status.textContent = 'Hubo un error al enviar. Probá de nuevo o escribinos por WhatsApp.';
+      btn.disabled = false;
+      btn.textContent = 'ENVIAR DATOS';
+    });
+  });
+</script>
+</body>
+</html>
