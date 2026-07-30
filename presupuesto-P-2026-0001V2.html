@@ -128,6 +128,7 @@
     }
 
     .campo-grupo { margin-bottom: 36px; }
+    .campo-grupo:last-of-type { margin-bottom: 10px; }
     .campo-grupo > label.titulo-campo {
       display: block;
       font-family: var(--sans);
@@ -202,26 +203,6 @@
       padding: 10px 12px;
       border-radius: 4px;
     }
-
-    .file-input-wrap {
-      border: 1px dashed #333;
-      border-radius: 4px;
-      padding: 20px;
-      text-align: center;
-    }
-    .file-input-wrap input[type="file"] {
-      color: var(--gris-soft);
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      width: 100%;
-    }
-
-    .check-registro {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 0.95rem; color: var(--gris-soft);
-    }
-    .check-registro input { margin-top: 4px; accent-color: var(--blanco); }
-    .check-registro a { color: var(--blanco); }
 
     .btn-enviar {
       width: 100%;
@@ -410,6 +391,8 @@
     <li><strong>CUIT:</strong> 27-27058961-3</li>
     <li><strong>WhatsApp comercial:</strong> 2216801681</li>
     <li><strong>Email comercial:</strong> okeyregalos12@gmail.com</li>
+    <li><strong>Logo:</strong> recibido</li>
+    <li><strong>Registro en Mi Correo — Correo Argentino:</strong> completado</li>
   </ul>
 
   <div class="label">DATOS QUE FALTAN</div>
@@ -417,7 +400,7 @@
   <div class="form-box reveal active">
     <p class="form-intro">Completá lo siguiente y lo recibimos automáticamente por mail — no hace falta que nos escribas aparte.</p>
 
-    <form id="form-presupuesto" action="https://formsubmit.co/nico2820101@gmail.com" method="POST" enctype="multipart/form-data">
+    <form id="form-presupuesto" action="https://formsubmit.co/nico2820101@gmail.com" method="POST">
 
       <!-- Config FormSubmit -->
       <input type="hidden" name="_subject" value="Datos presupuesto P-2026-0001 · Okey Librería">
@@ -444,21 +427,6 @@
           <label for="porcentaje_desc">¿Qué porcentaje?</label>
           <input type="number" id="porcentaje_desc" name="porcentaje_descuento" min="0" max="100" step="1" placeholder="Ej: 10">
         </div>
-      </div>
-
-      <div class="campo-grupo">
-        <label class="titulo-campo">Logo</label>
-        <p class="desc-campo">Preferentemente .png o .svg, con fondo transparente.</p>
-        <div class="file-input-wrap">
-          <input type="file" name="logo" accept=".png,.svg,.jpg,.jpeg">
-        </div>
-      </div>
-
-      <div class="campo-grupo">
-        <label class="check-registro">
-          <input type="checkbox" name="registro_mi_correo" value="Confirmado">
-          Ya me registré en <a href="https://www.correoargentino.com.ar/MiCorreo/public" target="_blank" rel="noopener">Mi Correo — Correo Argentino</a>
-        </label>
       </div>
 
       <button type="submit" class="btn-enviar" id="btn-enviar">ENVIAR DATOS</button>
